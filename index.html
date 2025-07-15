@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vGyyan.ai – Listen · Learn · Lead · Leap</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+    header {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+    header video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .overlay h1 {
+      font-size: 3rem;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 1rem;
+      z-index: 2;
+    }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    footer {
+      background: #111;
+      color: #aaa;
+      padding: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <video autoplay muted loop>
+      <source src="demo-placeholder.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <nav>
+      <a href="#videos">Demo</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#about">About</a>
+      <a href="#login">Login</a>
+    </nav>
+    <div class="overlay">
+      <div>
+        <h1>vGyyan.ai</h1>
+        <p>Listen · Learn · Lead · Leap</p>
+      </div>
+    </div>
+  </header>
+
+  <section id="videos">
+    <h2 class="section-title">Explore Sample Videos</h2>
+    <p style="text-align:center">Watch how boring textbooks are transformed into cinematic learning experiences.</p>
+    <div style="text-align:center; padding: 2rem 0;">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/demo" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <h2 class="section-title">What Parents & Students Say</h2>
+    <p>"This changed the way my son studies." – Parent A</p>
+    <p>"Now I love history class!" – Class 6 Student</p>
+    <p>"Learning feels like watching a movie." – Class 9 Student</p>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">Meet the Founder</h2>
+    <p>vGyyan is on a mission to solve the rising crisis of screen addiction and IQ erosion among school students. We bring textbook content to life through AI-powered videos, rich visuals, doubt sessions, and monthly quizzes. Once you enter vGyyan, it’s a sea of virtual knowledge.</p>
+  </section>
+
+  <section id="login">
+    <h2 class="section-title">Login / Sign Up</h2>
+    <p>Coming soon. Stay tuned for exclusive access!</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 vGyyan.ai | All rights reserved.</p>
+    <p>Follow us: Instagram · YouTube · GitHub · LinkedIn</p>
+    <p>Contact: team@vgyyan.ai</p>
+  </footer>
+</body>
+</html>
