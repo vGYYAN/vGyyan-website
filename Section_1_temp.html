@@ -10,7 +10,7 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #fefefe;
     }
-
+/*
     .navbar {
       position: fixed;
       top: 0;
@@ -24,7 +24,24 @@
       z-index: 10;
       position: relative;
     }
-
+*/
+    .navbar {
+      position: fixed;
+      top: 1.2rem; /* pushes it down */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(240, 240, 240, 0.8); /* light gray translucent */
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 1rem 1rem;
+      z-index: 999;
+    }
+    
     .nav-left, .nav-right {
       display: flex;
       align-items: center;
