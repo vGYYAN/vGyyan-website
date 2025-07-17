@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +10,7 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #fefefe;
     }
-    header {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem;
-      background: url('your-video-placeholder.gif') no-repeat center center/cover;
-      color: #000;
-    }
+
     .navbar {
       position: fixed;
       top: 0;
@@ -34,11 +24,13 @@
       z-index: 10;
       position: relative;
     }
+
     .nav-left, .nav-right {
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
+
     .nav-middle {
       position: absolute;
       left: 50%;
@@ -47,47 +39,60 @@
       font-size: 2rem;
       color: #222;
     }
+
     .nav-link {
       text-decoration: none;
       color: #333;
       font-weight: 500;
     }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 8rem 2rem 2rem 2rem;
+      box-sizing: border-box;
+      background: url('your-video-placeholder.gif') no-repeat center center/cover;
+    }
+
     .hero-left {
       width: 60%;
-      padding-top: 4rem;
     }
+
     .hero-main {
       font-size: 2rem;
       font-weight: bold;
       color: #000;
       margin-bottom: 1rem;
     }
+
     .hero-sub {
       font-size: 2.5rem;
       font-weight: 600;
       color: #0077cc;
       margin-bottom: 2rem;
     }
+
     .floating-text {
       font-size: 1.2rem;
       color: #111;
-      line-height: 1.6;
-      height: 5rem;
+      line-height: 2rem;
+      height: 6rem;
       overflow: hidden;
       position: relative;
     }
+
     .floating-text span {
       position: absolute;
-      width: 100%;
-      animation: floatText 20s linear infinite;
+      white-space: nowrap;
+      animation: floatText 18s linear infinite;
     }
+
     @keyframes floatText {
-      0% { top: 0; }
-      20% { top: -3rem; }
-      40% { top: -6rem; }
-      60% { top: -9rem; }
-      80% { top: -12rem; }
-      100% { top: 0; }
+      0%   { top: 100%; }
+      85%  { top: -100%; }
+      100% { top: 100%; } /* restart after slight pause */
     }
   </style>
 </head>
@@ -114,11 +119,11 @@
       <div class="hero-sub">Step into the future of education with vGyyan.ai</div>
       <div class="floating-text">
         <span>
-          We help parents tackle screen-time addiction in children.<br />
-          Transform textbooks into immersive visual stories.<br />
-          Personalized learning with built-in quizzes.<br />
-          Track your child’s growth and academic progress.<br />
-          Monthly competitions, AI-generated insights, and more.<br />
+          We help parents tackle screen-time addiction in children. &nbsp;&nbsp;&nbsp;
+          Transform textbooks into immersive visual stories. &nbsp;&nbsp;&nbsp;
+          Personalized learning with built-in quizzes. &nbsp;&nbsp;&nbsp;
+          Track your child’s growth and academic progress. &nbsp;&nbsp;&nbsp;
+          Monthly competitions, AI-generated insights, and more. &nbsp;&nbsp;&nbsp;
         </span>
       </div>
     </div>
