@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>vGYYAN.ai Animated Background</title>
+  <title>vGYYAN.ai Animated Blobs</title>
   <style>
     html, body {
       margin: 0;
@@ -11,60 +11,75 @@
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
       background-color: #fdfdfd;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
-    body::before {
-      content: "";
+    .blob {
       position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      border-radius: 50%;
+      opacity: 0.4;
+      filter: blur(60px);
       z-index: -1;
-      background-color: #fdfdfd;
-      background-image:
-        radial-gradient(circle at var(--x1, 20%) var(--y1, 30%), #c084fc 0%, transparent 50%),
-        radial-gradient(circle at var(--x2, 70%) var(--y2, 40%), #38bdf8 0%, transparent 50%),
-        radial-gradient(circle at var(--x3, 50%) var(--y3, 80%), #fbbf24 0%, transparent 50%),
-        radial-gradient(circle at var(--x4, 90%) var(--y4, 90%), #f472b6 0%, transparent 50%);
-      background-repeat: no-repeat;
-      background-size: 150% 150%;
-      opacity: 0.9;
-      animation: animateBlobs 12s ease-in-out infinite alternate;
+      animation: moveBlob 20s ease-in-out infinite alternate;
     }
 
-    @keyframes animateBlobs {
-      0% {
-        --x1: 20%; --y1: 30%;
-        --x2: 70%; --y2: 40%;
-        --x3: 50%; --y3: 80%;
-        --x4: 90%; --y4: 90%;
-      }
-      50% {
-        --x1: 25%; --y1: 35%;
-        --x2: 65%; --y2: 45%;
-        --x3: 55%; --y3: 75%;
-        --x4: 85%; --y4: 85%;
-      }
-      100% {
-        --x1: 20%; --y1: 30%;
-        --x2: 70%; --y2: 40%;
-        --x3: 50%; --y3: 80%;
-        --x4: 90%; --y4: 90%;
-      }
+    .blob1 {
+      width: 400px;
+      height: 400px;
+      background: #c084fc; /* purple */
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .blob2 {
+      width: 300px;
+      height: 300px;
+      background: #38bdf8; /* blue */
+      top: 30%;
+      left: 70%;
+      animation-delay: 3s;
+    }
+
+    .blob3 {
+      width: 350px;
+      height: 350px;
+      background: #fbbf24; /* yellow-orange */
+      top: 70%;
+      left: 40%;
+      animation-delay: 6s;
+    }
+
+    .blob4 {
+      width: 250px;
+      height: 250px;
+      background: #f472b6; /* pink */
+      top: 80%;
+      left: 80%;
+      animation-delay: 9s;
+    }
+
+    @keyframes moveBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-30px, 20px) scale(1.1); }
+      100% { transform: translate(30px, -20px) scale(0.95); }
     }
 
     h1 {
+      position: relative;
+      z-index: 1;
       padding: 4rem;
       font-size: 2.5rem;
       color: #222;
-      position: relative;
-      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <h1>This is the animated colorful background 🎨</h1>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="blob blob4"></div>
+
+  <h1>🧠 Dynamic Animated Background is Working!</h1>
 </body>
 </html>
