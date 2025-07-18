@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>vGYYAN.ai Background Test</title>
+  <title>vGYYAN.ai Animated Background</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background-color: transparent;
+      background-color: #fdfdfd;
       overflow-x: hidden;
     }
 
@@ -23,27 +23,35 @@
       width: 100%;
       z-index: -1;
       background-color: #fdfdfd;
-      background-image: 
-        radial-gradient(circle at 20% 30%, #c084fc 0%, transparent 50%),   /* purple */
-        radial-gradient(circle at 70% 40%, #38bdf8 0%, transparent 50%),   /* blue */
-        radial-gradient(circle at 50% 80%, #fbbf24 0%, transparent 50%),   /* yellow-orange */
-        radial-gradient(circle at 90% 90%, #f472b6 0%, transparent 50%);   /* pink */
+      background-image:
+        radial-gradient(circle at var(--x1, 20%) var(--y1, 30%), #c084fc 0%, transparent 50%),
+        radial-gradient(circle at var(--x2, 70%) var(--y2, 40%), #38bdf8 0%, transparent 50%),
+        radial-gradient(circle at var(--x3, 50%) var(--y3, 80%), #fbbf24 0%, transparent 50%),
+        radial-gradient(circle at var(--x4, 90%) var(--y4, 90%), #f472b6 0%, transparent 50%);
       background-repeat: no-repeat;
       background-size: 150% 150%;
-      animation: moveBlobs 10s ease-in-out infinite;
       opacity: 0.9;
-      pointer-events: none;
+      animation: animateBlobs 12s ease-in-out infinite alternate;
     }
 
-    @keyframes moveBlobs {
+    @keyframes animateBlobs {
       0% {
-        background-position: 20% 30%, 70% 40%, 50% 80%, 90% 90%;
+        --x1: 20%; --y1: 30%;
+        --x2: 70%; --y2: 40%;
+        --x3: 50%; --y3: 80%;
+        --x4: 90%; --y4: 90%;
       }
       50% {
-        background-position: 25% 35%, 65% 45%, 55% 75%, 85% 85%;
+        --x1: 25%; --y1: 35%;
+        --x2: 65%; --y2: 45%;
+        --x3: 55%; --y3: 75%;
+        --x4: 85%; --y4: 85%;
       }
       100% {
-        background-position: 20% 30%, 70% 40%, 50% 80%, 90% 90%;
+        --x1: 20%; --y1: 30%;
+        --x2: 70%; --y2: 40%;
+        --x3: 50%; --y3: 80%;
+        --x4: 90%; --y4: 90%;
       }
     }
 
@@ -51,12 +59,12 @@
       padding: 4rem;
       font-size: 2.5rem;
       color: #222;
-      z-index: 1;
       position: relative;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <h1>This is the improved background test with visible blobs</h1>
+  <h1>This is the animated colorful background 🎨</h1>
 </body>
 </html>
