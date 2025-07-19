@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>vGYYAN.ai – Section 2</title>
   <style>
     body {
@@ -29,11 +29,12 @@
 
     .poster-track {
       display: inline-flex;
+      width: max-content;
       animation: scroll-left 40s linear infinite;
     }
 
     .poster-row:nth-child(2) .poster-track {
-      animation: scroll-right 30s linear infinite;
+      animation: scroll-left 30s linear infinite;
     }
 
     .poster-row:hover .poster-track {
@@ -74,13 +75,8 @@
     }
 
     @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-
-    @keyframes scroll-right {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(100%); }
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
   </style>
 </head>
@@ -89,7 +85,8 @@
     <!-- Row 1 -->
     <div class="poster-row">
       <div class="poster-track">
-        <!-- Original + Duplicate Posters -->
+        <!-- Original Posters -->
+        <!-- START OF SEQUENCE -->
         <div class="poster" data-info="Class 3 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_English.jpg" /></div>
         <div class="poster" data-info="Class 3 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 4 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_4_English.webp" /></div>
@@ -101,7 +98,7 @@
         <div class="poster" data-info="Class 6 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 6 - SST"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_SST.jpg" /></div>
 
-        <!-- Duplicates for seamless loop -->
+        <!-- Duplicate Posters for Seamless Loop -->
         <div class="poster" data-info="Class 3 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_English.jpg" /></div>
         <div class="poster" data-info="Class 3 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 4 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_4_English.webp" /></div>
@@ -112,12 +109,14 @@
         <div class="poster" data-info="Class 5 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_5_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 6 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 6 - SST"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_SST.jpg" /></div>
+        <!-- END OF SEQUENCE -->
       </div>
     </div>
 
     <!-- Row 2 -->
     <div class="poster-row">
       <div class="poster-track">
+        <!-- START OF SEQUENCE -->
         <div class="poster" data-info="Class 7 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_English.jpg" /></div>
         <div class="poster" data-info="Class 7 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 7 - SST"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_7_SST.webp" /></div>
@@ -134,7 +133,7 @@
         <div class="poster" data-info="Class 9 - Political Science"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_9_Political_Science.webp" /></div>
         <div class="poster" data-info="Class 9 - Science"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_Science.jpg" /></div>
 
-        <!-- Duplicates -->
+        <!-- Duplicates for seamless loop -->
         <div class="poster" data-info="Class 7 - English"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_English.jpg" /></div>
         <div class="poster" data-info="Class 7 - Hindi"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_Hindi.jpg" /></div>
         <div class="poster" data-info="Class 7 - SST"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_7_SST.webp" /></div>
@@ -150,6 +149,7 @@
         <div class="poster" data-info="Class 9 - History"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_History.jpg" /></div>
         <div class="poster" data-info="Class 9 - Political Science"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_9_Political_Science.webp" /></div>
         <div class="poster" data-info="Class 9 - Science"><img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_Science.jpg" /></div>
+        <!-- END OF SEQUENCE -->
       </div>
     </div>
   </div>
