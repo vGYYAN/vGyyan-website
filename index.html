@@ -2,127 +2,243 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>vGyyan.ai – Listen · Learn · Lead · Leap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧠 vGYYAN.ai</title>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      background:
+        linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%),
+        linear-gradient(225deg, #d6ecff 0%, transparent 10%),
+        #ffffff;
+      overflow-x: hidden;
     }
-    body, html {
-      font-family: Arial, sans-serif;
-      scroll-behavior: smooth;
-    }
-    header {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      color: white;
-    }
-    header video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-    }
-    .overlay h1 {
-      font-size: 3rem;
-    }
-    nav {
+
+    /* Navbar */
+    .navbar {
       position: fixed;
-      top: 0;
-      right: 0;
-      padding: 1rem;
-      z-index: 2;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(200, 235, 246, 0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 1rem 1rem;
+      z-index: 999;
     }
-    nav a {
-      color: white;
-      margin-left: 1rem;
-      text-decoration: none;
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-middle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-weight: bold;
-    }
-    section {
-      padding: 4rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .section-title {
       font-size: 2rem;
+      color: #222;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* Hero Section */
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      min-height: 90vh;
+      padding: 8rem 2rem 2rem 2rem;
+      box-sizing: border-box;
+      background: url('your-video-placeholder.gif') no-repeat center center/cover;
+    }
+
+    .hero-left {
+      width: 60%;
+    }
+
+    .hero-main {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #000;
       margin-bottom: 1rem;
+    }
+
+    .hero-sub {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #0077cc;
+      margin-bottom: 2rem;
+    }
+
+    .floating-text {
+      font-size: 1.2rem;
+      color: #111;
+      line-height: 1.6;
+      height: 6rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .floating-text span {
+      position: absolute;
+      width: 100%;
+      animation: floatText 10s linear infinite;
+    }
+
+    @keyframes floatText {
+      0% { top: 100%; }
+      85% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    /* Section 2: Posters */
+    .section-2 {
+      margin-top: -3rem; /* pulls section 2 upward slightly into view */
+      padding-top: 3rem;
+      background: radial-gradient(circle at 10% 30%, #cce9f9 0%, transparent 20%),
+                  radial-gradient(circle at 60% 40%, #cce9f9 0%, transparent 40%),
+                  radial-gradient(circle at 50% 70%, #c2f8e4 0%, transparent 30%),
+                  #f9f9f9;
+    }
+
+    .poster-row {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .poster-row + .poster-row {
+      margin-top: 2rem;
+    }
+
+    .poster-track {
+      display: inline-flex;
+      width: max-content;
+      animation: scroll-left 44s linear infinite;
+    }
+
+    .poster-row:nth-of-type(2) .poster-track {
+      animation: scroll-right 40s linear infinite;
+    }
+
+    .poster-row:hover .poster-track {
+      animation-play-state: paused;
+    }
+
+    .poster {
+      position: relative;
+      flex: 0 0 auto;
+      height: 180px;
+      aspect-ratio: 3 / 4;
+      margin-right: 1.5rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .poster-row:nth-of-type(2) .poster {
+      height: 240px;
+    }
+
+    .poster img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .poster:hover::after {
+      content: attr(data-info);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0.3rem;
       text-align: center;
     }
-    footer {
-      background: #111;
-      color: #aaa;
-      padding: 2rem;
-      text-align: center;
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes scroll-right {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
     }
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <a class="nav-link" href="#what">What We Do</a>
+      <a class="nav-link" href="#about">About Us</a>
+      <a class="nav-link" href="#app">Get the App</a>
+    </div>
+    <div class="nav-middle">
+      🧠 vGYYAN.ai
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="#signup">Sign Up</a>
+      <a class="nav-link" href="#login">Login</a>
+      <span style="cursor:pointer; font-size: 1.5rem;">&#9776;</span>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
   <header>
-    <video autoplay muted loop>
-      <source src="demo-placeholder.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
-    </video>
-    <nav>
-      <a href="#videos">Demo</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#about">About</a>
-      <a href="#login">Login</a>
-    </nav>
-    <div class="overlay">
-      <div>
-        <h1>vGyyan.ai</h1>
-        <p>Listen · Learn · Lead · Leap</p>
+    <div class="hero-left">
+      <div class="hero-main">Skip outdated learning methods.</div>
+      <div class="hero-sub">Step into the future of education with vGyyan.ai</div>
+      <div class="floating-text">
+        <span>
+          Personalized learning with built-in quizzes.<br />
+          Track your child’s growth and academic progress.<br />
+          Monthly competitions, AI-generated insights, and more.<br />
+          Personalized learning with built-in quizzes.<br />
+          Track your child’s growth and academic progress.<br />
+          Monthly competitions, AI-generated insights, and more.<br />
+        </span>
       </div>
     </div>
   </header>
 
-  <section id="videos">
-    <h2 class="section-title">Explore Sample Videos</h2>
-    <p style="text-align:center">Watch how boring textbooks are transformed into cinematic learning experiences.</p>
-    <div style="text-align:center; padding: 2rem 0;">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/demo" frameborder="0" allowfullscreen></iframe>
+  <!-- Section 2 -->
+  <div class="section-2">
+    <!-- Row 1 -->
+    <div class="poster-row">
+      <div class="poster-track">
+        <!-- Use your full set of posters here -->
+        <!-- Duplicate the same sequence for loop effect -->
+        <!-- Poster elements here like:
+        <div class="poster" data-info="Class 3 - English">
+          <img src="..." />
+        </div>
+        -->
+      </div>
     </div>
-  </section>
 
-  <section id="reviews">
-    <h2 class="section-title">What Parents & Students Say</h2>
-    <p>"This changed the way my son studies." – Parent A</p>
-    <p>"Now I love history class!" – Class 6 Student</p>
-    <p>"Learning feels like watching a movie." – Class 9 Student</p>
-  </section>
-
-  <section id="about">
-    <h2 class="section-title">Meet the Founder</h2>
-    <p>vGyyan is on a mission to solve the rising crisis of screen addiction and IQ erosion among school students. We bring textbook content to life through AI-powered videos, rich visuals, doubt sessions, and monthly quizzes. Once you enter vGyyan, it’s a sea of virtual knowledge.</p>
-  </section>
-
-  <section id="login">
-    <h2 class="section-title">Login / Sign Up</h2>
-    <p>Coming soon. Stay tuned for exclusive access!</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 vGyyan.ai | All rights reserved.</p>
-    <p>Follow us: Instagram · YouTube · GitHub · LinkedIn</p>
-    <p>Contact: team@vgyyan.ai</p>
-  </footer>
+    <!-- Row 2 -->
+    <div class="poster-row">
+      <div class="poster-track">
+        <!-- Posters for second row (and duplicates) -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>
