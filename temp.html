@@ -2,84 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>vGYYAN.ai Animated Blobs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vGYYAN.ai – Section 2</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fdfdfd;
+      background: #fdfdfd;
+      overflow-x: hidden;
+    }
+
+    .section-2 {
+      padding-top: 7rem;
+      background-color: #fafafa;
+    }
+
+    .poster-row {
+      display: flex;
+      gap: 1rem;
+      white-space: nowrap;
       overflow: hidden;
-    }
-
-    .blob {
-      position: fixed;
-      border-radius: 50%;
-      opacity: 0.4;
-      filter: blur(60px);
-      z-index: -1;
-      animation: moveBlob 20s ease-in-out infinite alternate;
-    }
-
-    .blob1 {
-      width: 400px;
-      height: 400px;
-      background: #c084fc; /* purple */
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-
-    .blob2 {
-      width: 300px;
-      height: 300px;
-      background: #38bdf8; /* blue */
-      top: 30%;
-      left: 70%;
-      animation-delay: 3s;
-    }
-
-    .blob3 {
-      width: 350px;
-      height: 350px;
-      background: #fbbf24; /* yellow-orange */
-      top: 70%;
-      left: 40%;
-      animation-delay: 6s;
-    }
-
-    .blob4 {
-      width: 250px;
-      height: 250px;
-      background: #f472b6; /* pink */
-      top: 80%;
-      left: 80%;
-      animation-delay: 9s;
-    }
-
-    @keyframes moveBlob {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-30px, 20px) scale(1.1); }
-      100% { transform: translate(30px, -20px) scale(0.95); }
-    }
-
-    h1 {
       position: relative;
-      z-index: 1;
-      padding: 4rem;
-      font-size: 2.5rem;
-      color: #222;
+    }
+
+    .poster-track {
+      display: flex;
+      animation: scroll-left 50s linear infinite;
+    }
+
+    .poster-row:nth-child(2) .poster-track {
+      animation: scroll-right 35s linear infinite;
+    }
+
+    .poster-row:hover .poster-track {
+      animation-play-state: paused;
+    }
+
+    .poster {
+      position: relative;
+      flex: 0 0 auto;
+      height: 160px;
+      aspect-ratio: 3 / 4;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .poster img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .poster:hover::after {
+      content: attr(data-info);
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0.3rem;
+      text-align: center;
+    }
+
+    .poster-row:nth-child(2) .poster {
+      height: 200px;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    @keyframes scroll-right {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(100%); }
     }
   </style>
 </head>
 <body>
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-  <div class="blob blob4"></div>
+  <div class="section-2">
+    <!-- Row 1 -->
+    <div class="poster-row">
+      <div class="poster-track">
+        <div class="poster" data-info="Class 3 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_English.jpg" />
+        </div>
+        <div class="poster" data-info="Class 3 - Hindi">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_3_Hindi.jpg" />
+        </div>
+        <div class="poster" data-info="Class 4 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_4_English.webp" />
+        </div>
+        <div class="poster" data-info="Class 4 - EVS">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_4_Evs.jpg" />
+        </div>
+        <div class="poster" data-info="Class 4 - Hindi">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_4_Hindi.jpg" />
+        </div>
+        <div class="poster" data-info="Class 5 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_5_English.jpg" />
+        </div>
+        <div class="poster" data-info="Class 5 - EVS">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_5_Evs.jpg" />
+        </div>
+        <div class="poster" data-info="Class 5 - Hindi">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_5_Hindi.jpg" />
+        </div>
+        <div class="poster" data-info="Class 6 - Hindi">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_Hindi.jpg" />
+        </div>
+        <div class="poster" data-info="Class 6 - SST">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_6_SST.jpg" />
+        </div>
+      </div>
+    </div>
 
-  <h1>🧠 Dynamic Animated Background is Working!</h1>
+    <!-- Row 2 -->
+    <div class="poster-row">
+      <div class="poster-track">
+        <div class="poster" data-info="Class 7 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_English.jpg" />
+        </div>
+        <div class="poster" data-info="Class 7 - Hindi">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_Hindi.jpg" />
+        </div>
+        <div class="poster" data-info="Class 7 - SST">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_7_SST.webp" />
+        </div>
+        <div class="poster" data-info="Class 7 - Science">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_7_Science.png" />
+        </div>
+        <div class="poster" data-info="Class 8 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_8_English.webp" />
+        </div>
+        <div class="poster" data-info="Class 8 - Geography">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_8_Geography.jpg" />
+        </div>
+        <div class="poster" data-info="Class 8 - History">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_8_History.webp" />
+        </div>
+        <div class="poster" data-info="Class 8 - Political Science">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_8_Political_Science.jpg" />
+        </div>
+        <div class="poster" data-info="Class 8 - Science">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_8_Science.jpg" />
+        </div>
+        <div class="poster" data-info="Class 9 - Economics">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_Economics.jpg" />
+        </div>
+        <div class="poster" data-info="Class 9 - English">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_English.jpg" />
+        </div>
+        <div class="poster" data-info="Class 9 - Geography">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_9_Geography.webp" />
+        </div>
+        <div class="poster" data-info="Class 9 - History">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_History.jpg" />
+        </div>
+        <div class="poster" data-info="Class 9 - Political Science">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/refs/heads/main/Class_9_Political_Science.webp" />
+        </div>
+        <div class="poster" data-info="Class 9 - Science">
+          <img src="https://raw.githubusercontent.com/vGYYAN/Sec_2_Image/main/Class_9_Science.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
