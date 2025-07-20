@@ -74,31 +74,28 @@
     .advantage-box {
       flex: 1 1 250px;
       max-width: 280px;
-      background: #ffffff;
+      background: #ffffff; /* ensure full white box */
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); /* slightly stronger default shadow */
       padding: 2rem;
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .advantage-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      transform: translateY(-12px); /* bigger lift */
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15); /* deeper hover shadow */
     }
-    
     .advantage-box h3 {
       font-size: 1.2rem;
       margin-bottom: 1rem;
       color: #0077cc;
-    }
-    
+    }  
     .advantage-box p {
       font-size: 1rem;
       color: #444;
       line-height: 1.5;
-    }
-
+    }    
   </style>
 </head>
 <body>
@@ -117,7 +114,6 @@
         <p>Stay ahead with vGYYAN — where curiosity meets innovation and future-ready thinking.</p>
       </div>
       <h2 class="why-heading">Why vGYYAN</h2>
-
       <div class="advantage-row">
         <div class="advantage-box">
           <h3>🎯 Beyond the Chapter</h3>
@@ -134,6 +130,14 @@
         <div class="advantage-box">
           <h3>🧠 Real Learning</h3>
           <p>No mindless scrolling—every second on vGYYAN builds your knowledge base.</p>
+        </div>
+        <div class="advantage-box">
+          <h3>🧩 Custom Module</h3>
+          <p>This is a placeholder. You can customize it as you like.</p>
+        </div>
+        <div class="advantage-box">
+          <h3>🚀 Coming Soon</h3>
+          <p>Stay tuned for even more amazing features coming your way.</p>
         </div>
       </div>
     </div>
