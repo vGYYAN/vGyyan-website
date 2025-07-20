@@ -78,34 +78,23 @@
   <!-- Scroll animation -->
   <script>
     const paragraphs = document.querySelectorAll('.scroll-text p');
-
+  
     window.addEventListener('scroll', () => {
-      let currentIndex = -1;
       const scrollY = window.scrollY + window.innerHeight / 1.5;
-
+      let currentIndex = -1;
+  
       paragraphs.forEach((p, i) => {
-        const offsetTop = p.offsetTop + p.offsetHeight / 2;
-        if (scrollY > offsetTop) {
+        const pMidpoint = p.getBoundingClientRect().top + p.offsetHeight / 2;
+        const sectionTop = document.querySelector('.section-3').getBoundingClientRect().top;
+        if (pMidpoint - sectionTop < window.innerHeight / 2) {
           currentIndex = i;
         }
       });
-
+  
       paragraphs.forEach((p, i) => {
         p.classList.toggle('active', i === currentIndex);
       });
     });
-  </script>/*
-      
-      paragraphs.forEach((p, i) => {
-        const offsetTop = p.offsetTop + p.offsetHeight / 2;
-        if (scrollY > offsetTop) {
-          // Clear previous
-          paragraphs.forEach(p => p.classList.remove('active'));
-          // Activate current two
-          if (paragraphs[i]) paragraphs[i].classList.add('active');
-          if (paragraphs[i + 1]) paragraphs[i + 1].classList.add('active');
-        }
-      });
-    })*/
+  </script>
 </body>
 </html>
