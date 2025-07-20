@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>vGYYAN.ai – Section 3</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .section-3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8rem 2rem;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%);
+    }
+
+    .section-3-left {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .section-3 .headline {
+      font-size: 2.7rem;
+      font-weight: bold;
+      margin-bottom: 2.5rem;
+      color: #111;
+    }
+
+    .section-3 .headline span {
+      display: block;
+      font-size: 3rem;
+      color: #0077cc;
+      margin-top: 0.5rem;
+    }
+
+    .scroll-text p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #777;
+      font-weight: 400;
+      margin: 1.5rem 0;
+      transition: all 0.5s ease;
+    }
+
+    .scroll-text p.active {
+      color: #000;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section 3 -->
+  <div class="section-3">
+    <div class="section-3-left">
+      <h2 class="headline">
+        From boring text<br>
+        <span>to engaging video</span>
+      </h2>
+      <div class="scroll-text">
+        <p>vGYYAN builds a bridge for students to leap ahead of the queue by replacing traditional text-based learning with modern, immersive tools.</p>
+        <p>We transform every chapter into deeply engaging visual content — not just covering what's in the textbook, but expanding far beyond it.</p>
+        <p>Why waste time watching random content that lowers your focus and IQ, when you could use the same time to surge ahead?</p>
+        <p>We ensure you're at the forefront of innovation, curiosity, and creativity in your circle — always one step ahead.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll animation -->
+  <script>
+    const paragraphs = document.querySelectorAll('.scroll-text p');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY + window.innerHeight / 1.5;
+
+      paragraphs.forEach((p, i) => {
+        const offsetTop = p.offsetTop + p.offsetHeight / 2;
+        if (scrollY > offsetTop) {
+          // Clear previous
+          paragraphs.forEach(p => p.classList.remove('active'));
+          // Activate current two
+          if (paragraphs[i]) paragraphs[i].classList.add('active');
+          if (paragraphs[i + 1]) paragraphs[i + 1].classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
