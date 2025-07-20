@@ -77,6 +77,27 @@
 
   <!-- Scroll animation -->
   <script>
+      <script>
+    const paragraphs = document.querySelectorAll('.scroll-text p');
+  
+    window.addEventListener('scroll', () => {
+      let currentIndex = -1;
+      const scrollY = window.scrollY + window.innerHeight / 1.5;
+  
+      paragraphs.forEach((p, i) => {
+        const offsetTop = p.offsetTop + p.offsetHeight / 2;
+        if (scrollY > offsetTop) {
+          currentIndex = i;
+        }
+      });
+  
+      // Clear all, then activate only one
+      paragraphs.forEach((p, i) => {
+        p.classList.toggle('active', i === currentIndex);
+      });
+    });
+  </script>
+/*
     const paragraphs = document.querySelectorAll('.scroll-text p');
 
     window.addEventListener('scroll', () => {
@@ -94,6 +115,6 @@
       });
     });
   </script>
-
+*/
 </body>
 </html>
