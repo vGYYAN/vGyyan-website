@@ -22,8 +22,9 @@
     }
 
     .section-3-left {
-      max-width: 800px;
+      max-width: 1000px;
       text-align: center;
+      margin: 0 auto;
     }
 
     .section-3 .headline {
@@ -40,11 +41,14 @@
 
     .scroll-text p {
       font-size: 1.2rem;
-      line-height: 1;
+      line-height: 1.2;
       color: #777;
       font-weight: 400;
       margin: 0.05rem 0;
       transition: all 0.5s ease;
+      white-space: nowrap;    /* ← prevents wrapping */
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .scroll-text p.active {
