@@ -35,7 +35,7 @@
 
     .section-3 .headline span {
       display: block;
-      font-size: 4.5rem;
+      font-size: 3.5rem;
       color: #0077cc;
     }
 
@@ -74,25 +74,25 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Scroll animation -->
   <script>
     const paragraphs = document.querySelectorAll('.scroll-text p');
   
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY + window.innerHeight / 1.5;
-      let currentIndex = -1;
+      let activated = false;
   
-      paragraphs.forEach((p, i) => {
-        const pMidpoint = p.getBoundingClientRect().top + p.offsetHeight / 2;
-        const sectionTop = document.querySelector('.section-3').getBoundingClientRect().top;
-        if (pMidpoint - sectionTop < window.innerHeight / 2) {
-          currentIndex = i;
+      paragraphs.forEach((p) => {
+        const rect = p.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+  
+        // Check if this paragraph is near the center of the screen
+        if (!activated && midpoint >= window.innerHeight / 2 - 20 && midpoint <= window.innerHeight / 2 + 20) {
+          p.classList.add('active');
+          activated = true;
+        } else {
+          p.classList.remove('active');
         }
-      });
-  
-      paragraphs.forEach((p, i) => {
-        p.classList.toggle('active', i === currentIndex);
       });
     });
   </script>
