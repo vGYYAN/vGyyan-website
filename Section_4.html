@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #fff5db;"> 
+<body class="min-h-screen overflow-x-auto" style="background-color: #fff8db;"> 
 <!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
   <div class="flex">
     <!-- Left Column -->
@@ -127,7 +127,7 @@
         const box = clone.querySelector('div');
         const num = clone.querySelector('.class-num');
         num.textContent = cls;
-        
+    
         vgyaanBox.classList.remove('selected');
     
         box.onclick = () => {
@@ -139,54 +139,42 @@
     
             const subjectTracker = { current: null };
     
-            createPanel(
-              subjects, 
-              (subjEl, subject, level) => {
-                selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
+            createPanel(subjects, (subjEl, subject, subjectLevel) => {
+              selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
+              if (!selectedSubjectEl) {
+                clearRightPanels(subjectLevel);
+                return;
+              }
     
-                if (!selectedSubjectEl) {
-                  clearRightPanels(level);
-                  return;
-                }
+              const chapterTracker = { current: null };
     
-                // Use a tracker for chapters inside THIS subject
-                const chapterTracker = { current: null };
+              createPanel(chapters, (chapEl, chapterName, chapterLevel) => {
+                selectedChapterEl = toggleSelection(chapEl, chapterTracker.current);
+                chapterTracker.current = selectedChapterEl;
+                clearRightPanels(chapterLevel + 1);
     
-                createPanel(chapters, (chapEl, selectedChapterText, level2) => {
-                  clearRightPanels(level2 + 1);
-                
-                  const newSelectedChapter = toggleSelection(chapEl, chapterTracker.current);
-                  chapterTracker.current = newSelectedChapter;
-                
-                  if (!chapterTracker.current) return;
-                
-                  // Track the selected chapter's name
-                  const currentChapterName = selectedChapterText;
-                
-                  const actionTracker = { current: null };
-                
-                  createPanel(actions, (actionEl, action, level3) => {
-                    const newSelectedAction = toggleSelection(actionEl, actionTracker.current);
-                    actionTracker.current = newSelectedAction;
-                
-                    clearRightPanels(level3 + 1);
-                    if (!actionTracker.current) return;
-                
-                    if (['Video', 'Summary', 'Questions'].includes(action)) {
-                      const actionPanel = document.createElement('div');
-                      actionPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                      actionPanel.innerHTML = `
-                        <h3 class="text-lg font-bold mb-2">${currentChapterName} - ${action}</h3>
-                        <p class="text-sm text-gray-500">[${action} content placeholder]</p>
-                      `;
-                      expansionArea.appendChild(actionPanel);
-                    }
-                  }, level2 + 1, true, actionTracker);
-                
-                }, level + 1, true, chapterTracker);
+                if (!selectedChapterEl) return;
     
-              }, 0, true, subjectTracker
-            );
+                const actionTracker = { current: null };
+    
+                createPanel(actions, (actionEl, actionName, actionLevel) => {
+                  selectedActionEl = toggleSelection(actionEl, actionTracker.current);
+                  actionTracker.current = selectedActionEl;
+                  clearRightPanels(actionLevel + 1);
+    
+                  if (!selectedActionEl) return;
+    
+                  const actionPanel = document.createElement('div');
+                  actionPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                  actionPanel.innerHTML = `
+                    <h3 class="text-lg font-bold mb-2">${chapterName} - ${actionName}</h3>
+                    <p class="text-sm text-gray-500">[${actionName} content placeholder]</p>
+                  `;
+                  expansionArea.appendChild(actionPanel);
+    
+                }, chapterLevel + 1, true, actionTracker);
+              }, subjectLevel + 1, true, chapterTracker);
+            }, 1, true, subjectTracker); // ⚠️ Start level from 1, not 0
           } else {
             clearRightPanels(0);
           }
