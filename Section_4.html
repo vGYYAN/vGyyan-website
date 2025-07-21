@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,18 +13,15 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #fff2db;"> 
-<!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
+<body class="min-h-screen overflow-x-auto" style="background-color: #f5f5db;">
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
-      <!-- vGYYAN Module -->
       <div id="vgyaan-box" class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected cursor-pointer">
         <h2 class="text-lg font-bold text-green-600">vGYYAN</h2>
         <div class="mt-2 text-sm text-gray-600">Video placeholder here to explain features.</div>
       </div>
 
-      <!-- Class Modules -->
       <template id="class-template">
         <div class="bg-white rounded-xl p-4 shadow-md cursor-pointer transition-transform duration-200">
           <h3 class="font-semibold">Class <span class="class-num"></span></h3>
@@ -34,7 +31,7 @@
       <div id="class-list" class="space-y-4"></div>
     </div>
 
-    <!-- Dynamic Expansion Area -->
+    <!-- Dynamic Panels -->
     <div id="expansion-area" class="flex flex-grow p-4 space-x-6 overflow-x-auto"></div>
   </div>
 
@@ -51,8 +48,6 @@
 
     let selectedClassEl = null;
     let selectedSubjectEl = null;
-    let selectedChapterEl = null;
-    let selectedActionEl = null;
 
     function clearRightPanels(fromLevel) {
       while (expansionArea.children.length > fromLevel) {
@@ -60,64 +55,47 @@
       }
     }
 
-    function toggleSelection(el, currentSelected) {
-      if (currentSelected && currentSelected !== el) {
-        currentSelected.classList.remove('selected');
+    function toggleSelection(el, currentTracker) {
+      if (currentTracker.current && currentTracker.current !== el) {
+        currentTracker.current.classList.remove('selected');
       }
-      if (currentSelected === el) {
+      if (currentTracker.current === el) {
         el.classList.toggle('selected');
-        return el.classList.contains('selected') ? el : null;
+        currentTracker.current = el.classList.contains('selected') ? el : null;
       } else {
         el.classList.add('selected');
-        return el;
+        currentTracker.current = el;
       }
     }
 
-    function createPanel(items, onClick, level, compact = false, selectTracker = null, customWidth = {}) {
+    function createPanel(items, onClick, level, compact = false, tracker = null) {
       clearRightPanels(level);
-    
-      const minW = customWidth.min || '300px';
-      const maxW = customWidth.max || '340px';
-    
-      const panel = document.createElement('div');/*
-      panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;*/
-      panel.className = `bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
-      panel.style.minWidth = minW;
-      panel.style.maxWidth = maxW;
-  
-      if (compact) {
-        panel.classList.add('h-fit');
-      }
-    
+
+      const panel = document.createElement('div');
+      panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
+      panel.style.minWidth = '300px';
+      panel.style.maxWidth = '340px';
+      if (compact) panel.classList.add('h-fit');
+
       items.forEach(item => {
         const el = document.createElement('div');
         el.textContent = item;
         el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
-        el.onclick = () => {
-          if (selectTracker) {
-            const selectedEl = toggleSelection(el, selectTracker.current);
-            selectTracker.current = selectedEl;
-          }
-          // 💥 This is the key: clear ALL panels beyond this point, every time
-          clearRightPanels(level + 1);
-          onClick(el, item, level + 1);
-        };
+        el.onclick = () => onClick(el, item, level + 1);
         panel.appendChild(el);
       });
-    
+
       expansionArea.appendChild(panel);
     }
 
-    function resetAllSelections() {
-      [selectedClassEl, selectedSubjectEl, selectedChapterEl, selectedActionEl].forEach(el => {
-        if (el) el.classList.remove('selected');
-      });
-      selectedClassEl = selectedSubjectEl = selectedChapterEl = selectedActionEl = null;
+    function resetSelections() {
+      selectedClassEl = selectedSubjectEl = null;
+      clearRightPanels(0);
+      document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
     }
 
     vgyaanBox.onclick = () => {
-      resetAllSelections();
-      clearRightPanels(0);
+      resetSelections();
       console.log("vGYYAN selected. Video should play here.");
     };
 
@@ -127,58 +105,46 @@
         const box = clone.querySelector('div');
         const num = clone.querySelector('.class-num');
         num.textContent = cls;
-    
-        vgyaanBox.classList.remove('selected');
-    
+
         box.onclick = () => {
-          selectedClassEl = toggleSelection(box, selectedClassEl);
-          if (selectedClassEl) {
-            selectedSubjectEl = null;
-            selectedChapterEl = null;
-            selectedActionEl = null;
-    
-            const subjectTracker = { current: null };
-    
-            createPanel(subjects, (subjEl, subject, subjectLevel) => {
-              selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
-              if (!selectedSubjectEl) {
-                clearRightPanels(subjectLevel);
-                return;
-              }
-    
-              const chapterTracker = { current: null };
-    
-              createPanel(chapters, (chapEl, chapterName, chapterLevel) => {
-                selectedChapterEl = toggleSelection(chapEl, chapterTracker.current);
-                chapterTracker.current = selectedChapterEl;
-                clearRightPanels(chapterLevel + 1);
-    
-                if (!selectedChapterEl) return;
-    
-                const actionTracker = { current: null };
-    
-                createPanel(actions, (actionEl, actionName, actionLevel) => {
-                  selectedActionEl = toggleSelection(actionEl, actionTracker.current);
-                  actionTracker.current = selectedActionEl;
-                  clearRightPanels(actionLevel + 1);
-    
-                  if (!selectedActionEl) return;
-    
-                  const actionPanel = document.createElement('div');
-                  actionPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                  actionPanel.innerHTML = `
-                    <h3 class="text-lg font-bold mb-2">${chapterName} - ${actionName}</h3>
-                    <p class="text-sm text-gray-500">[${actionName} content placeholder]</p>
-                  `;
-                  expansionArea.appendChild(actionPanel);
-    
-                }, chapterLevel + 1, true, actionTracker);
-              }, subjectLevel + 1, true, chapterTracker);
-            }, 1, true, subjectTracker); // ⚠️ Start level from 1, not 0
-          } else {
-            clearRightPanels(0);
-          }
+          if (selectedClassEl && selectedClassEl !== box) selectedClassEl.classList.remove('selected');
+          selectedClassEl = box.classList.toggle('selected') ? box : null;
+          if (!selectedClassEl) return resetSelections();
+
+          const subjectTracker = { current: null };
+          createPanel(subjects, (subjEl, subject, level1) => {
+            toggleSelection(subjEl, subjectTracker);
+            if (!subjectTracker.current) {
+              clearRightPanels(level1);
+              return;
+            }
+
+            const chapterTracker = { current: null };
+            createPanel(chapters, (chapEl, chapter, level2) => {
+              toggleSelection(chapEl, chapterTracker);
+              clearRightPanels(level2);
+
+              if (!chapterTracker.current) return;
+
+              const actionTracker = { current: null };
+              createPanel(actions, (actionEl, action, level3) => {
+                toggleSelection(actionEl, actionTracker);
+                clearRightPanels(level3);
+
+                if (!actionTracker.current) return;
+
+                const displayPanel = document.createElement('div');
+                displayPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                displayPanel.innerHTML = `
+                  <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
+                  <p class="text-sm text-gray-500">[${action} content placeholder]</p>
+                `;
+                expansionArea.appendChild(displayPanel);
+              }, level2 + 1, true, actionTracker);
+            }, level1 + 1, true, chapterTracker);
+          }, 1, true, subjectTracker);
         };
+
         classList.appendChild(clone);
       });
     }
