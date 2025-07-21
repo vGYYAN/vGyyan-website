@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #fff9db;"> 
+<body class="min-h-screen overflow-x-auto" style="background-color: #fff15db;"> 
 <!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
   <div class="flex">
     <!-- Left Column -->
@@ -154,14 +154,14 @@
     
                 createPanel(chapters, (chapEl, selectedChapterText, level2) => {
                   // toggle logic for only one selected chapter per subject
+                  clearRightPanels(level2 + 1);
                   const newSelected = toggleSelection(chapEl, chapterTracker.current);
                   chapterTracker.current = newSelected;
-    
-                  clearRightPanels(level2 + 1);
+                  
                   if (!chapterTracker.current) {
                     return;
                   }
-    
+                      
                   // New: tracker for actions
                   const actionTracker = { current: null };
                   
