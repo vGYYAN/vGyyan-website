@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #ff9f9db;"> 
+<body class="min-h-screen overflow-x-auto" style="background-color: #fff9db;"> 
 <!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
   <div class="flex">
     <!-- Left Column -->
@@ -129,76 +129,69 @@
         num.textContent = cls;
         
         vgyaanBox.classList.remove('selected');
-
+    
         box.onclick = () => {
           selectedClassEl = toggleSelection(box, selectedClassEl);
           if (selectedClassEl) {
             selectedSubjectEl = null;
             selectedChapterEl = null;
             selectedActionEl = null;
-
-            createPanel(subjects, (subjEl, subject, level) => {
-              selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
-            
-              if (!selectedSubjectEl) {
-                clearRightPanels(level);
-                return;
-              }
-              createPanel(chapters, (chapEl, selectedChapterText, level2) => {
-                clearRightPanels(level2 + 1);
-              
-                if (selectedChapterEl && selectedChapterEl !== chapEl) {
-                  selectedChapterEl.classList.remove('selected');
-                }
-              
-                if (selectedChapterEl === chapEl) {
-                  chapEl.classList.toggle('selected');
-                  selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-                  if (!selectedChapterEl) clearRightPanels(level2 + 1);
+    
+            const subjectTracker = { current: null };
+    
+            createPanel(
+              subjects, 
+              (subjEl, subject, level) => {
+                selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
+    
+                if (!selectedSubjectEl) {
+                  clearRightPanels(level);
                   return;
                 }
-              
-                chapEl.classList.add('selected');
-                selectedChapterEl = chapEl;
-              
-                let currentSelectedActionEl = null;
-              
-                createPanel(actions, (actionEl, action, level3) => {
-                  if (currentSelectedActionEl && currentSelectedActionEl !== actionEl) {
-                    currentSelectedActionEl.classList.remove('selected');
-                  }
-              
-                  if (currentSelectedActionEl === actionEl) {
-                    actionEl.classList.toggle('selected');
-                    currentSelectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
-                    clearRightPanels(level3 + 1);
+    
+                // Use a tracker for chapters inside THIS subject
+                const chapterTracker = { current: null };
+    
+                createPanel(chapters, (chapEl, selectedChapterText, level2) => {
+                  // toggle logic for only one selected chapter per subject
+                  const newSelected = toggleSelection(chapEl, chapterTracker.current);
+                  chapterTracker.current = newSelected;
+    
+                  clearRightPanels(level2 + 1);
+                  if (!chapterTracker.current) {
                     return;
                   }
-              
-                  actionEl.classList.add('selected');
-                  currentSelectedActionEl = actionEl;
-              
-                  clearRightPanels(level3 + 1);
-              
-                  if (action === 'Video') {
-                    const videoPanel = document.createElement('div');
-                    videoPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                    videoPanel.innerHTML = `
-                      <h3 class="text-lg font-bold mb-2">${selectedChapterText} - ${action}</h3>
-                      <p class="text-sm text-gray-500">[Video player placeholder]</p>
-                    `;
-                    expansionArea.appendChild(videoPanel);
-                  }
-                }, level2 + 1, true);
-              }, level + 1, true, { current: selectedChapterEl });
-              
-            }, 0, true, { current: selectedSubjectEl });
-
+    
+                  // New: tracker for actions
+                  const actionTracker = { current: null };
+                  
+                  createPanel(actions, (actionEl, action, level3) => {
+                    const newSelectedAction = toggleSelection(actionEl, actionTracker.current);
+                    actionTracker.current = newSelectedAction;
+    
+                    clearRightPanels(level3 + 1);
+                    if (!actionTracker.current) return;
+    
+                    // Only append when selected
+                    if (action === 'Video') {
+                      const videoPanel = document.createElement('div');
+                      videoPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                      videoPanel.innerHTML = `
+                        <h3 class="text-lg font-bold mb-2">${selectedChapterText} - ${action}</h3>
+                        <p class="text-sm text-gray-500">[Video player placeholder]</p>
+                      `;
+                      expansionArea.appendChild(videoPanel);
+                    }
+                  }, level2 + 1, true, actionTracker);
+    
+                }, level + 1, true, chapterTracker);
+    
+              }, 0, true, subjectTracker
+            );
           } else {
             clearRightPanels(0);
           }
         };
-
         classList.appendChild(clone);
       });
     }
