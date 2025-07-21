@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #f5f5db;">
+<body class="min-h-screen overflow-x-auto" style="background-color: #fffacd;">
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
@@ -47,7 +47,9 @@
     const vgyaanBox = document.getElementById('vgyaan-box');
 
     let selectedClassEl = null;
-    let selectedSubjectEl = null;
+    let subjectTracker = { current: null };
+    let chapterTracker = { current: null };
+    let actionTracker = { current: null };
 
     function clearRightPanels(fromLevel) {
       while (expansionArea.children.length > fromLevel) {
@@ -55,22 +57,21 @@
       }
     }
 
-    function toggleSelection(el, currentTracker) {
-      if (currentTracker.current && currentTracker.current !== el) {
-        currentTracker.current.classList.remove('selected');
+    function toggleSelection(el, tracker) {
+      if (tracker.current && tracker.current !== el) {
+        tracker.current.classList.remove('selected');
       }
-      if (currentTracker.current === el) {
+      if (tracker.current === el) {
         el.classList.toggle('selected');
-        currentTracker.current = el.classList.contains('selected') ? el : null;
+        tracker.current = el.classList.contains('selected') ? el : null;
       } else {
         el.classList.add('selected');
-        currentTracker.current = el;
+        tracker.current = el;
       }
     }
 
     function createPanel(items, onClick, level, compact = false, tracker = null) {
       clearRightPanels(level);
-
       const panel = document.createElement('div');
       panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
       panel.style.minWidth = '300px';
@@ -81,22 +82,28 @@
         const el = document.createElement('div');
         el.textContent = item;
         el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
-        el.onclick = () => onClick(el, item, level + 1);
+        el.onclick = () => {
+          if (tracker) toggleSelection(el, tracker);
+          onClick(el, item, level + 1);
+        };
         panel.appendChild(el);
       });
 
       expansionArea.appendChild(panel);
     }
 
-    function resetSelections() {
-      selectedClassEl = selectedSubjectEl = null;
+    function resetAll() {
+      [subjectTracker, chapterTracker, actionTracker].forEach(tracker => {
+        if (tracker.current) tracker.current.classList.remove('selected');
+        tracker.current = null;
+      });
       clearRightPanels(0);
-      document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
     }
 
     vgyaanBox.onclick = () => {
-      resetSelections();
-      console.log("vGYYAN selected. Video should play here.");
+      if (selectedClassEl) selectedClassEl.classList.remove('selected');
+      selectedClassEl = null;
+      resetAll();
     };
 
     function buildClassModules() {
@@ -107,26 +114,42 @@
         num.textContent = cls;
 
         box.onclick = () => {
-          if (selectedClassEl && selectedClassEl !== box) selectedClassEl.classList.remove('selected');
-          selectedClassEl = box.classList.toggle('selected') ? box : null;
-          if (!selectedClassEl) return resetSelections();
+          if (selectedClassEl && selectedClassEl !== box) {
+            selectedClassEl.classList.remove('selected');
+          }
+          if (selectedClassEl === box) {
+            box.classList.toggle('selected');
+            if (!box.classList.contains('selected')) {
+              selectedClassEl = null;
+              resetAll();
+              return;
+            }
+          } else {
+            box.classList.add('selected');
+            selectedClassEl = box;
+          }
 
-          const subjectTracker = { current: null };
+          resetAll();
+
           createPanel(subjects, (subjEl, subject, level1) => {
             toggleSelection(subjEl, subjectTracker);
+            chapterTracker.current = null;
+            actionTracker.current = null;
+
             if (!subjectTracker.current) {
               clearRightPanels(level1);
               return;
             }
 
-            const chapterTracker = { current: null };
             createPanel(chapters, (chapEl, chapter, level2) => {
               toggleSelection(chapEl, chapterTracker);
-              clearRightPanels(level2);
+              actionTracker.current = null;
 
-              if (!chapterTracker.current) return;
+              if (!chapterTracker.current) {
+                clearRightPanels(level2);
+                return;
+              }
 
-              const actionTracker = { current: null };
               createPanel(actions, (actionEl, action, level3) => {
                 toggleSelection(actionEl, actionTracker);
                 clearRightPanels(level3);
@@ -141,6 +164,7 @@
                 `;
                 expansionArea.appendChild(displayPanel);
               }, level2 + 1, true, actionTracker);
+
             }, level1 + 1, true, chapterTracker);
           }, 1, true, subjectTracker);
         };
