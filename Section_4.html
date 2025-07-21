@@ -13,7 +13,8 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;">
+<body class="min-h-screen overflow-x-auto" style="background-color: #fff9db;"> 
+<!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
@@ -138,34 +139,43 @@
                 clearRightPanels(level);
                 return;
               }
+            createPanel(chapters, (chapEl, chapter, level2) => {
+              // Always clear any panels to the right of chapter
+              clearRightPanels(level2 + 1);
             
-              createPanel(chapters, (chapEl, chapter, level2) => {
-                // Clear action panel before anything else
-                clearRightPanels(level2 + 1);
-                
-                // Handle deselection and reselection logic
-                if (selectedChapterEl && selectedChapterEl !== chapEl) {
-                  selectedChapterEl.classList.remove('selected');
-                }
-                
-                if (selectedChapterEl === chapEl) {
-                  chapEl.classList.toggle('selected');
-                  selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-                  return;
-                }
-                
-                chapEl.classList.add('selected');
-                selectedChapterEl = chapEl;
-                selectedActionEl = null;
-                
-                // Always allow only one action panel open
-                clearRightPanels(level2 + 1);
-                
-                createPanel(actions, (actionEl) => {
-                  selectedActionEl = toggleSelection(actionEl, selectedActionEl);
-                }, level2 + 1, true, { current: selectedActionEl });
+              // Handle deselection of previous chapter
+              if (selectedChapterEl && selectedChapterEl !== chapEl) {
+                selectedChapterEl.classList.remove('selected');
+              }
             
-              }, level + 1, true, { current: selectedChapterEl });
+              // Toggle current selection
+              if (selectedChapterEl === chapEl) {
+                chapEl.classList.toggle('selected');
+                selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
+            
+                // If deselected, also clear action panel
+                if (!selectedChapterEl) {
+                  clearRightPanels(level2 + 1);
+                }
+            
+                return;
+              }
+            
+              // Select new chapter
+              chapEl.classList.add('selected');
+              selectedChapterEl = chapEl;
+            
+              // Reset action
+              selectedActionEl = null;
+            
+              // Ensure only one actions panel at a time
+              clearRightPanels(level2 + 1);
+            
+              createPanel(actions, (actionEl) => {
+                selectedActionEl = toggleSelection(actionEl, selectedActionEl);
+              }, level2 + 1, true, { current: selectedActionEl });
+            }, level + 1, true, { current: selectedChapterEl });
+
             
             }, 0, true, { current: selectedSubjectEl });
 
