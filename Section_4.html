@@ -73,8 +73,11 @@
 
     function createPanel(items, onClick, level, compact = false, selectTracker = null) {
       clearRightPanels(level);
-      const panel = document.createElement('div');
-      panel.className = 'min-w-[240px] max-w-[260px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
+      const panel = document.createElement('div');/*
+      panel.className = 'min-w-[240px] max-w-[260px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';*/
+      const minW = customWidth.min || '240px';
+      const maxW = customWidth.max || '260px';
+      panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
 
       if (compact) {
         panel.classList.add('flex', 'flex-col', 'justify-between', 'h-fit');
@@ -113,32 +116,47 @@
 
             createPanel(subjects, (subjEl, subject, level) => {
               selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
-
+            
               if (selectedSubjectEl) {
                 selectedChapterEl = null;
                 selectedActionEl = null;
-
-                createPanel(chapters, (chapEl, chapter, level2) => {
-                  selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
-
-                  if (selectedChapterEl) {
-                    selectedActionEl = null;
-
-                    createPanel(actions, (actionEl) => {
-                      selectedActionEl = toggleSelection(actionEl, selectedActionEl);
-                    }, level2 + 1, true, { current: selectedActionEl });
-                  } else {
-                    clearRightPanels(level2 + 1);
-                  }
-                }, level, true, { current: selectedChapterEl });
+            
+                createPanel(
+                  chapters,
+                  (chapEl, chapter, level2) => {
+                    selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
+            
+                    if (selectedChapterEl) {
+                      selectedActionEl = null;
+            
+                      createPanel(
+                        actions,
+                        (actionEl) => {
+                          selectedActionEl = toggleSelection(actionEl, selectedActionEl);
+                        },
+                        level2 + 1,
+                        true,
+                        { current: selectedActionEl },
+                        { min: '200px', max: '220px' } // 👈 Actions panel width
+                      );
+                    } else {
+                      clearRightPanels(level2 + 1);
+                    }
+                  },
+                  level,
+                  true,
+                  { current: selectedChapterEl },
+                  { min: '280px', max: '300px' } // 👈 Chapter panel width
+                );
               } else {
                 clearRightPanels(level);
               }
-            }, 0, true, { current: selectedSubjectEl });
-          } else {
-            clearRightPanels(0);
-          }
-        };
+            },
+            0,
+            true,
+            { current: selectedSubjectEl },
+            { min: '260px', max: '280px' } // 👈 Subject panel width
+            );
 
         classList.appendChild(clone);
       });
