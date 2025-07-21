@@ -5,29 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>vGYYAN Class Explorer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .selected {
+      transform: scale(1.05);
+      border: 2px solid #22c55e;
+    }
+  </style>
 </head>
 <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;">
   <div class="flex">
     <!-- Left Column -->
-    <div class="w-64 flex flex-col p-4 space-y-4">
+    <div class="w-72 flex flex-col pl-6 pr-4 py-4 space-y-4">
       <!-- vGYYAN Module -->
-      <div class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300">
+      <div class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected">
         <h2 class="text-lg font-bold text-green-600">vGYYAN</h2>
         <div class="mt-2 text-sm text-gray-600">Video placeholder here to explain features.</div>
       </div>
 
       <!-- Class Modules -->
       <template id="class-template">
-        <div class="bg-white rounded-xl p-4 shadow-md cursor-pointer">
+        <div class="bg-white rounded-xl p-4 shadow-md cursor-pointer transition-transform duration-200">
           <h3 class="font-semibold">Class <span class="class-num"></span></h3>
         </div>
       </template>
 
-      <div id="class-list"></div>
+      <div id="class-list" class="space-y-4"></div>
     </div>
 
     <!-- Dynamic Expansion Area -->
-    <div id="expansion-area" class="flex flex-grow p-4 space-x-4 overflow-x-auto"></div>
+    <div id="expansion-area" class="flex flex-grow p-4 space-x-6 overflow-x-auto"></div>
   </div>
 
   <script>
@@ -40,22 +46,42 @@
     const template = document.getElementById('class-template');
     const expansionArea = document.getElementById('expansion-area');
 
+    let selectedClassEl = null;
+    let selectedSubjectEl = null;
+
     function clearRightPanels(fromLevel) {
       while (expansionArea.children.length > fromLevel) {
         expansionArea.removeChild(expansionArea.lastChild);
       }
     }
 
-    function createPanel(items, onClick, level) {
+    function toggleSelection(el, currentSelected) {
+      if (currentSelected && currentSelected !== el) {
+        currentSelected.classList.remove('selected');
+      }
+      if (currentSelected === el) {
+        el.classList.toggle('selected');
+        return el.classList.contains('selected') ? el : null;
+      } else {
+        el.classList.add('selected');
+        return el;
+      }
+    }
+
+    function createPanel(items, onClick, level, compact = false) {
       clearRightPanels(level);
       const panel = document.createElement('div');
-      panel.className = 'w-48 bg-white rounded-xl p-4 shadow-md space-y-2';
+      panel.className = 'min-w-[200px] max-w-[220px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
+
+      if (compact) {
+        panel.classList.add('flex', 'flex-col', 'justify-between', 'h-fit');
+      }
 
       items.forEach(item => {
         const el = document.createElement('div');
         el.textContent = item;
-        el.className = 'cursor-pointer hover:text-green-600';
-        el.onclick = () => onClick(item, level + 1);
+        el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
+        el.onclick = () => onClick(el, item, level + 1);
         panel.appendChild(el);
       });
 
@@ -65,14 +91,28 @@
     function buildClassModules() {
       classes.forEach(cls => {
         const clone = template.content.cloneNode(true);
-        clone.querySelector('.class-num').textContent = cls;
-        clone.querySelector('div').onclick = () => {
-          createPanel(subjects, (subject, level) => {
-            createPanel(chapters, (chapter, level2) => {
-              createPanel(actions, () => {}, level2 + 1);
-            }, level);
-          }, 0);
+        const box = clone.querySelector('div');
+        const num = clone.querySelector('.class-num');
+        num.textContent = cls;
+
+        box.onclick = () => {
+          selectedClassEl = toggleSelection(box, selectedClassEl);
+          if (selectedClassEl) {
+            createPanel(subjects, (subjEl, subject, level) => {
+              selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
+              if (selectedSubjectEl) {
+                createPanel(chapters, (chapEl, chapter, level2) => {
+                  createPanel(actions, () => {}, level2 + 1);
+                }, level, true);
+              } else {
+                clearRightPanels(level);
+              }
+            }, 0, true);
+          } else {
+            clearRightPanels(0);
+          }
         };
+
         classList.appendChild(clone);
       });
     }
