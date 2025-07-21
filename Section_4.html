@@ -153,37 +153,36 @@
                 const chapterTracker = { current: null };
     
                 createPanel(chapters, (chapEl, selectedChapterText, level2) => {
-                  // toggle logic for only one selected chapter per subject
                   clearRightPanels(level2 + 1);
-                  const newSelected = toggleSelection(chapEl, chapterTracker.current);
-                  chapterTracker.current = newSelected;
-                  
-                  if (!chapterTracker.current) {
-                    return;
-                  }
-                      
-                  // New: tracker for actions
+                
+                  const newSelectedChapter = toggleSelection(chapEl, chapterTracker.current);
+                  chapterTracker.current = newSelectedChapter;
+                
+                  if (!chapterTracker.current) return;
+                
+                  // Track the selected chapter's name
+                  const currentChapterName = selectedChapterText;
+                
                   const actionTracker = { current: null };
-                  
+                
                   createPanel(actions, (actionEl, action, level3) => {
                     const newSelectedAction = toggleSelection(actionEl, actionTracker.current);
                     actionTracker.current = newSelectedAction;
-    
+                
                     clearRightPanels(level3 + 1);
                     if (!actionTracker.current) return;
-    
-                    // Only append when selected
-                    if (action === 'Video') {
-                      const videoPanel = document.createElement('div');
-                      videoPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                      videoPanel.innerHTML = `
-                        <h3 class="text-lg font-bold mb-2">${selectedChapterText} - ${action}</h3>
-                        <p class="text-sm text-gray-500">[Video player placeholder]</p>
+                
+                    if (['Video', 'Summary', 'Questions'].includes(action)) {
+                      const actionPanel = document.createElement('div');
+                      actionPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                      actionPanel.innerHTML = `
+                        <h3 class="text-lg font-bold mb-2">${currentChapterName} - ${action}</h3>
+                        <p class="text-sm text-gray-500">[${action} content placeholder]</p>
                       `;
-                      expansionArea.appendChild(videoPanel);
+                      expansionArea.appendChild(actionPanel);
                     }
                   }, level2 + 1, true, actionTracker);
-    
+                
                 }, level + 1, true, chapterTracker);
     
               }, 0, true, subjectTracker
