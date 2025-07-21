@@ -139,55 +139,54 @@
                 clearRightPanels(level);
                 return;
               }
-            createPanel(chapters, (chapEl, chapter, level2) => {
-              // Always clear any panels to the right of chapter
-              clearRightPanels(level2 + 1);
-            
-              // Handle deselection of previous chapter
-              if (selectedChapterEl && selectedChapterEl !== chapEl) {
-                selectedChapterEl.classList.remove('selected');
-              }
-            
-              // Toggle current selection
-              if (selectedChapterEl === chapEl) {
-                chapEl.classList.toggle('selected');
-                selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-            
-                // If deselected, also clear action panel
-                if (!selectedChapterEl) {
-                  clearRightPanels(level2 + 1);
+              createPanel(chapters, (chapEl, chapter, level2) => {
+                // Always clear any panels to the right of chapter
+                clearRightPanels(level2 + 1);
+              
+                // Handle deselection of previous chapter
+                if (selectedChapterEl && selectedChapterEl !== chapEl) {
+                  selectedChapterEl.classList.remove('selected');
                 }
-            
-                return;
-              }
-            
-              // Select new chapter
-              chapEl.classList.add('selected');
-              selectedChapterEl = chapEl;
-            
-              // Reset action
-              selectedActionEl = null;
-            
-              // Ensure only one actions panel at a time
-              clearRightPanels(level2 + 1);
-            createPanel(actions, (actionEl, action, level3) => {
-              if (selectedActionEl && selectedActionEl !== actionEl) {
-                selectedActionEl.classList.remove('selected');
-              }
-            
-              if (selectedActionEl === actionEl) {
-                actionEl.classList.toggle('selected');
-                selectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
-                return;
-              }
-            
-              actionEl.classList.add('selected');
-              selectedActionEl = actionEl;
-            }, level2 + 1, true, { current: selectedActionEl });
+              
+                // Toggle current selection
+                if (selectedChapterEl === chapEl) {
+                  chapEl.classList.toggle('selected');
+                  selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
+              
+                  // If deselected, also clear action panel
+                  if (!selectedChapterEl) {
+                    clearRightPanels(level2 + 1);
+                  }
+              
+                  return;
+                }
+              
+                // Select new chapter
+                chapEl.classList.add('selected');
+                selectedChapterEl = chapEl;
+              
+                // Reset action
+                selectedActionEl = null;
+              
+                // Ensure only one actions panel at a time
+                clearRightPanels(level2 + 1);
+              createPanel(actions, (actionEl, action, level3) => {
+                if (selectedActionEl && selectedActionEl !== actionEl) {
+                  selectedActionEl.classList.remove('selected');
+                }
+              
+                if (selectedActionEl === actionEl) {
+                  actionEl.classList.toggle('selected');
+                  selectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
+                  return;
+                }
+              
+                actionEl.classList.add('selected');
+                selectedActionEl = actionEl;
+              }, level2 + 1, true, { current: selectedActionEl });
 
             }, level + 1, true, { current: selectedChapterEl });
-
-            
+              
             }, 0, true, { current: selectedSubjectEl });
 
           } else {
