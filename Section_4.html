@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #f3f3cd;">
+<body class="min-h-screen overflow-x-auto" style="background-color: #f8f8cd;">
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
@@ -42,124 +42,115 @@
     const subjects = ['English', 'Science', 'SST'];
     const chapters = Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`);
     const actions = ['Video', 'Summary', 'Questions'];
-
+  
     const classList = document.getElementById('class-list');
     const template = document.getElementById('class-template');
     const expansionArea = document.getElementById('expansion-area');
     const vgyaanBox = document.getElementById('vgyaan-box');
-
-    let selectedClassEl = null;
-    let selectedSubjectEl = null;
-    let selectedChapterEl = null;
-    let selectedActionEl = null;
-
-    function clearPanels(fromLevel = 0) {
-      while (expansionArea.children.length > fromLevel) {
+  
+    let selectedElements = {
+      class: null,
+      subject: null,
+      chapter: null,
+      action: null
+    };
+  
+    function clearPanels(fromIndex = 0) {
+      while (expansionArea.children.length > fromIndex) {
         expansionArea.removeChild(expansionArea.lastChild);
       }
     }
-
-    function toggleSelection(el, selectedRef) {
-      if (selectedRef && selectedRef !== el) {
-        selectedRef.classList.remove('selected');
-      }
-      if (selectedRef === el) {
+  
+    function toggleSelection(el, key) {
+      const prev = selectedElements[key];
+      if (prev && prev !== el) prev.classList.remove('selected');
+  
+      if (prev === el) {
         el.classList.toggle('selected');
-        return el.classList.contains('selected') ? el : null;
+        selectedElements[key] = el.classList.contains('selected') ? el : null;
       } else {
         el.classList.add('selected');
-        return el;
+        selectedElements[key] = el;
       }
+  
+      return selectedElements[key];
     }
-
-    function createPanel(items, onClick, level, compact = false, selectedTracker = null) {
+  
+    function createPanel(items, onClick, level, trackerKey) {
       clearPanels(level);
-
       const panel = document.createElement('div');
-      panel.className = `bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
+      panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
       panel.style.minWidth = '300px';
       panel.style.maxWidth = '340px';
-      if (compact) panel.classList.add('h-fit');
-
+  
       items.forEach(item => {
         const el = document.createElement('div');
         el.textContent = item;
         el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
         el.onclick = () => {
-          if (selectedTracker) {
-            const selectedEl = toggleSelection(el, selectedTracker.current);
-            selectedTracker.current = selectedEl;
+          if (!toggleSelection(el, trackerKey)) {
+            clearPanels(level + 1);
+            return;
           }
-
-          clearPanels(level + 1);
-          onClick(el, item, level + 1);
+          onClick(item, level + 1);
         };
         panel.appendChild(el);
       });
-
+  
       expansionArea.appendChild(panel);
     }
-
-    function resetSelections() {
-      [selectedClassEl, selectedSubjectEl, selectedChapterEl, selectedActionEl].forEach(el => {
-        if (el) el.classList.remove('selected');
+  
+    function resetAll() {
+      Object.keys(selectedElements).forEach(k => {
+        if (selectedElements[k]) selectedElements[k].classList.remove('selected');
+        selectedElements[k] = null;
       });
-      selectedClassEl = selectedSubjectEl = selectedChapterEl = selectedActionEl = null;
     }
-
+  
     vgyaanBox.onclick = () => {
-      resetSelections();
+      resetAll();
       clearPanels(0);
     };
-
+  
     function buildClassModules() {
       classes.forEach(cls => {
         const clone = template.content.cloneNode(true);
         const box = clone.querySelector('div');
         const num = clone.querySelector('.class-num');
         num.textContent = cls;
-
+  
         box.onclick = () => {
-          selectedClassEl = toggleSelection(box, selectedClassEl);
-          if (selectedClassEl) {
-            const subjectTracker = { current: null };
-            const chapterTracker = { current: null };
-            const actionTracker = { current: null };
-
-            createPanel(subjects, (subjectEl, subject, level1) => {
-              subjectTracker.current = toggleSelection(subjectEl, subjectTracker.current);
-              if (!subjectTracker.current) return;
-
-              createPanel(chapters, (chapterEl, chapter, level2) => {
-                chapterTracker.current = toggleSelection(chapterEl, chapterTracker.current);
-                if (!chapterTracker.current) return;
-
-                createPanel(actions, (actionEl, action, level3) => {
-                  actionTracker.current = toggleSelection(actionEl, actionTracker.current);
-                  if (!actionTracker.current) return;
-
-                  const contentPanel = document.createElement('div');
-                  contentPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                  contentPanel.innerHTML = `
-                    <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
-                    <p class="text-sm text-gray-500">[${action} content placeholder]</p>
-                  `;
-                  expansionArea.appendChild(contentPanel);
-                }, level2 + 1, true, actionTracker);
-
-              }, level1 + 1, true, chapterTracker);
-
-            }, 0, true, subjectTracker);
-          } else {
+          if (!toggleSelection(box, 'class')) {
             clearPanels(0);
+            return;
           }
+  
+          selectedElements.subject = null;
+          selectedElements.chapter = null;
+          selectedElements.action = null;
+  
+          createPanel(subjects, (subject, subjectLevel) => {
+            createPanel(chapters, (chapter, chapterLevel) => {
+              createPanel(actions, (action, actionLevel) => {
+                clearPanels(actionLevel);
+                const content = document.createElement('div');
+                content.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                content.innerHTML = `
+                  <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
+                  <p class="text-sm text-gray-500">[${action} content placeholder]</p>
+                `;
+                expansionArea.appendChild(content);
+              }, chapterLevel, 'action');
+            }, subjectLevel, 'chapter');
+          }, 0, 'subject');
         };
-
+  
         classList.appendChild(clone);
       });
     }
-
+  
     buildClassModules();
   </script>
+
 </body>
 </html>
