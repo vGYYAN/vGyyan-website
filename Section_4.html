@@ -139,8 +139,11 @@
                 createPanel(chapters, (chapEl, chapter, level2) => {
                   selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
 
+                  clearRightPanels(level2 + 1);
+                  
                   if (selectedChapterEl) {
                     selectedActionEl = null;
+
                     createPanel(actions, (actionEl) => {
                       selectedActionEl = toggleSelection(actionEl, selectedActionEl);
                     }, level2 + 1, true, { current: selectedActionEl });
