@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #fff2db;"> 
+<body class="min-h-screen overflow-x-auto" style="background-color: #ff9f9db;"> 
 <!-- <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;"> -->
   <div class="flex">
     <!-- Left Column -->
@@ -144,60 +144,47 @@
                 clearRightPanels(level);
                 return;
               }
-              createPanel(chapters, (chapEl, chapter, level2) => {
-                // Always clear any panels to the right of chapter
+              createPanel(chapters, (chapEl, selectedChapterText, level2) => {
                 clearRightPanels(level2 + 1);
               
-                // Handle deselection of previous chapter
                 if (selectedChapterEl && selectedChapterEl !== chapEl) {
                   selectedChapterEl.classList.remove('selected');
                 }
               
-                // Toggle current selection
                 if (selectedChapterEl === chapEl) {
                   chapEl.classList.toggle('selected');
                   selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-              
-                  // If deselected, also clear action panel
-                  if (!selectedChapterEl) {
-                    clearRightPanels(level2 + 1);
-                  }
-              
+                  if (!selectedChapterEl) clearRightPanels(level2 + 1);
                   return;
                 }
               
-                // Select new chapter
                 chapEl.classList.add('selected');
                 selectedChapterEl = chapEl;
               
-                // ⚠️ Local tracker for this specific chapter's action panel
                 let currentSelectedActionEl = null;
               
-                // Create Action Panel
                 createPanel(actions, (actionEl, action, level3) => {
-                  // Remove previous action selection
                   if (currentSelectedActionEl && currentSelectedActionEl !== actionEl) {
                     currentSelectedActionEl.classList.remove('selected');
-                    
                   }
               
-                  // Toggle logic
                   if (currentSelectedActionEl === actionEl) {
                     actionEl.classList.toggle('selected');
                     currentSelectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
+                    clearRightPanels(level3 + 1);
                     return;
                   }
               
                   actionEl.classList.add('selected');
                   currentSelectedActionEl = actionEl;
+              
                   clearRightPanels(level3 + 1);
-
-                  // ✅ Inject content if "Video" selected
+              
                   if (action === 'Video') {
                     const videoPanel = document.createElement('div');
                     videoPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
                     videoPanel.innerHTML = `
-                      <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
+                      <h3 class="text-lg font-bold mb-2">${selectedChapterText} - ${action}</h3>
                       <p class="text-sm text-gray-500">[Video player placeholder]</p>
                     `;
                     expansionArea.appendChild(videoPanel);
