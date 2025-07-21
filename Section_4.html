@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #f8f8cd;">
+<body class="min-h-screen overflow-x-auto" style="background-color: rgba(241, 241, 205, 0.8);">
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
@@ -79,9 +79,11 @@
     function createPanel(items, onClick, level, trackerKey) {
       clearPanels(level);
       const panel = document.createElement('div');
-      panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
+      panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200 w-fit h-fit';
       panel.style.minWidth = '300px';
       panel.style.maxWidth = '340px';
+      panel.style.display = 'inline-block';
+      panel.style.alignSelf = 'flex-start';
   
       items.forEach(item => {
         const el = document.createElement('div');
