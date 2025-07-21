@@ -140,13 +140,27 @@
               }
             
               createPanel(chapters, (chapEl, chapter, level2) => {
-                selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
-            
-                if (!selectedChapterEl) {
-                  clearRightPanels(level2);
+                // Clear action panel before anything else
+                clearRightPanels(level2 + 1);
+                
+                // Handle deselection and reselection logic
+                if (selectedChapterEl && selectedChapterEl !== chapEl) {
+                  selectedChapterEl.classList.remove('selected');
+                }
+                
+                if (selectedChapterEl === chapEl) {
+                  chapEl.classList.toggle('selected');
+                  selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
                   return;
                 }
-            
+                
+                chapEl.classList.add('selected');
+                selectedChapterEl = chapEl;
+                selectedActionEl = null;
+                
+                // Always allow only one action panel open
+                clearRightPanels(level2 + 1);
+                
                 createPanel(actions, (actionEl) => {
                   selectedActionEl = toggleSelection(actionEl, selectedActionEl);
                 }, level2 + 1, true, { current: selectedActionEl });
