@@ -82,7 +82,7 @@
       panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
 
       if (compact) {
-        panel.classList.add('flex', 'flex-col', 'justify-between', 'h-fit');
+        panel.classList.add('h-fit');
       }
 
       items.forEach(item => {
@@ -137,29 +137,31 @@
                 selectedActionEl = null;
 
                 createPanel(chapters, (chapEl, chapter, level2) => {
-                  // Always clear deeper panels before any action
+                  // Always clear anything after the chapter level
                   clearRightPanels(level2);
                 
-                  // Remove selected style from old chapter if exists
+                  // Handle deselection of previous chapter
                   if (selectedChapterEl && selectedChapterEl !== chapEl) {
                     selectedChapterEl.classList.remove('selected');
                   }
                 
-                  // If same chapter clicked again, toggle
+                  // If same chapter is clicked again, toggle selection and return
                   if (selectedChapterEl === chapEl) {
                     chapEl.classList.toggle('selected');
                     selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-                    return; // stop here
+                    return;
                   }
                 
-                  // Else select new chapter
+                  // Select new chapter
                   chapEl.classList.add('selected');
                   selectedChapterEl = chapEl;
                 
-                  // Reset action selection
+                  // Reset any selected action
                   selectedActionEl = null;
                 
-                  // Now open actions panel for the selected chapter
+                  // Only one actions panel should exist now
+                  clearRightPanels(level2 + 1);
+                
                   createPanel(actions, (actionEl) => {
                     if (selectedActionEl && selectedActionEl !== actionEl) {
                       selectedActionEl.classList.remove('selected');
