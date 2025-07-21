@@ -9,13 +9,14 @@
     .selected {
       transform: scale(1.05);
       border: 2px solid #22c55e;
+      background-color: #f0fdf4;
     }
   </style>
 </head>
 <body class="min-h-screen overflow-x-auto" style="background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%), linear-gradient(225deg, #d6ecff 0%, transparent 10%), #ffffff;">
   <div class="flex">
     <!-- Left Column -->
-    <div class="w-72 flex flex-col pl-6 pr-4 py-4 space-y-4">
+    <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
       <!-- vGYYAN Module -->
       <div class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected">
         <h2 class="text-lg font-bold text-green-600">vGYYAN</h2>
@@ -48,6 +49,8 @@
 
     let selectedClassEl = null;
     let selectedSubjectEl = null;
+    let selectedChapterEl = null;
+    let selectedActionEl = null;
 
     function clearRightPanels(fromLevel) {
       while (expansionArea.children.length > fromLevel) {
@@ -68,10 +71,10 @@
       }
     }
 
-    function createPanel(items, onClick, level, compact = false) {
+    function createPanel(items, onClick, level, compact = false, selectTracker = null) {
       clearRightPanels(level);
       const panel = document.createElement('div');
-      panel.className = 'min-w-[200px] max-w-[220px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
+      panel.className = 'min-w-[240px] max-w-[260px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
 
       if (compact) {
         panel.classList.add('flex', 'flex-col', 'justify-between', 'h-fit');
@@ -81,7 +84,13 @@
         const el = document.createElement('div');
         el.textContent = item;
         el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
-        el.onclick = () => onClick(el, item, level + 1);
+        el.onclick = () => {
+          if (selectTracker) {
+            const selectedEl = toggleSelection(el, selectTracker.current);
+            selectTracker.current = selectedEl;
+          }
+          onClick(el, item, level + 1);
+        };
         panel.appendChild(el);
       });
 
@@ -98,16 +107,34 @@
         box.onclick = () => {
           selectedClassEl = toggleSelection(box, selectedClassEl);
           if (selectedClassEl) {
+            selectedSubjectEl = null;
+            selectedChapterEl = null;
+            selectedActionEl = null;
+
             createPanel(subjects, (subjEl, subject, level) => {
               selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
+
               if (selectedSubjectEl) {
+                selectedChapterEl = null;
+                selectedActionEl = null;
+
                 createPanel(chapters, (chapEl, chapter, level2) => {
-                  createPanel(actions, () => {}, level2 + 1);
-                }, level, true);
+                  selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
+
+                  if (selectedChapterEl) {
+                    selectedActionEl = null;
+
+                    createPanel(actions, (actionEl) => {
+                      selectedActionEl = toggleSelection(actionEl, selectedActionEl);
+                    }, level2 + 1, true, { current: selectedActionEl });
+                  } else {
+                    clearRightPanels(level2 + 1);
+                  }
+                }, level, true, { current: selectedChapterEl });
               } else {
                 clearRightPanels(level);
               }
-            }, 0, true);
+            }, 0, true, { current: selectedSubjectEl });
           } else {
             clearRightPanels(0);
           }
