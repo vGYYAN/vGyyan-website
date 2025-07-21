@@ -79,9 +79,12 @@
       const minW = customWidth.min || '300px';
       const maxW = customWidth.max || '340px';
     
-      const panel = document.createElement('div');
-      panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
-    
+      const panel = document.createElement('div');/*
+      panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;*/
+      panel.className = `bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
+      panel.style.minWidth = minW;
+      panel.style.maxWidth = maxW;
+  
       if (compact) {
         panel.classList.add('h-fit');
       }
@@ -124,6 +127,8 @@
         const box = clone.querySelector('div');
         const num = clone.querySelector('.class-num');
         num.textContent = cls;
+        
+        vgyaanBox.classList.remove('selected');
 
         box.onclick = () => {
           selectedClassEl = toggleSelection(box, selectedClassEl);
@@ -165,27 +170,40 @@
                 chapEl.classList.add('selected');
                 selectedChapterEl = chapEl;
               
-                // Reset action
-                selectedActionEl = null;
+                // ⚠️ Local tracker for this specific chapter's action panel
+                let currentSelectedActionEl = null;
               
-                // Ensure only one actions panel at a time
-                clearRightPanels(level2 + 1);
-              createPanel(actions, (actionEl, action, level3) => {
-                if (selectedActionEl && selectedActionEl !== actionEl) {
-                  selectedActionEl.classList.remove('selected');
-                }
+                // Create Action Panel
+                createPanel(actions, (actionEl, action, level3) => {
+                  // Remove previous action selection
+                  if (currentSelectedActionEl && currentSelectedActionEl !== actionEl) {
+                    currentSelectedActionEl.classList.remove('selected');
+                    
+                  }
               
-                if (selectedActionEl === actionEl) {
-                  actionEl.classList.toggle('selected');
-                  selectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
-                  return;
-                }
+                  // Toggle logic
+                  if (currentSelectedActionEl === actionEl) {
+                    actionEl.classList.toggle('selected');
+                    currentSelectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
+                    return;
+                  }
               
-                actionEl.classList.add('selected');
-                selectedActionEl = actionEl;
-              }, level2 + 1, true, { current: selectedActionEl });
+                  actionEl.classList.add('selected');
+                  currentSelectedActionEl = actionEl;
+                  clearRightPanels(level3 + 1);
 
-            }, level + 1, true, { current: selectedChapterEl });
+                  // ✅ Inject content if "Video" selected
+                  if (action === 'Video') {
+                    const videoPanel = document.createElement('div');
+                    videoPanel.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
+                    videoPanel.innerHTML = `
+                      <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
+                      <p class="text-sm text-gray-500">[Video player placeholder]</p>
+                    `;
+                    expansionArea.appendChild(videoPanel);
+                  }
+                }, level2 + 1, true);
+              }, level + 1, true, { current: selectedChapterEl });
               
             }, 0, true, { current: selectedSubjectEl });
 
