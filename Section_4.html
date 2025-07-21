@@ -13,7 +13,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background-color: #fffacd;">
+<body class="min-h-screen overflow-x-auto" style="background-color: #f6f6c6;">
   <div class="flex">
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
@@ -133,13 +133,16 @@
 
           createPanel(subjects, (subjEl, subject, level1) => {
             toggleSelection(subjEl, subjectTracker);
-            chapterTracker.current = null;
-            actionTracker.current = null;
 
             if (!subjectTracker.current) {
               clearRightPanels(level1);
               return;
             }
+            
+            // Reset other trackers after confirmation
+            chapterTracker.current = null;
+            actionTracker.current = null;
+
 
             createPanel(chapters, (chapEl, chapter, level2) => {
               toggleSelection(chapEl, chapterTracker);
