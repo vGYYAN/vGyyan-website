@@ -71,15 +71,19 @@
       }
     }
 
-    function createPanel(items, onClick, level, compact = false, selectTracker = null) {
+    function createPanel(items, onClick, level, compact = false, selectTracker = null, customWidth = {}) {
       clearRightPanels(level);
+    
+      const minW = customWidth.min || '240px';
+      const maxW = customWidth.max || '260px';
+    
       const panel = document.createElement('div');
-      panel.className = 'min-w-[240px] max-w-[260px] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200';
-
+      panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
+    
       if (compact) {
         panel.classList.add('flex', 'flex-col', 'justify-between', 'h-fit');
       }
-
+    
       items.forEach(item => {
         const el = document.createElement('div');
         el.textContent = item;
@@ -93,9 +97,10 @@
         };
         panel.appendChild(el);
       });
-
+    
       expansionArea.appendChild(panel);
     }
+
 
     function buildClassModules() {
       classes.forEach(cls => {
