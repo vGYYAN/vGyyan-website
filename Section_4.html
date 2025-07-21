@@ -74,17 +74,17 @@
 
     function createPanel(items, onClick, level, compact = false, selectTracker = null, customWidth = {}) {
       clearRightPanels(level);
-
+    
       const minW = customWidth.min || '300px';
       const maxW = customWidth.max || '340px';
-
+    
       const panel = document.createElement('div');
       panel.className = `min-w-[${minW}] max-w-[${maxW}] bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200`;
-
+    
       if (compact) {
         panel.classList.add('h-fit');
       }
-
+    
       items.forEach(item => {
         const el = document.createElement('div');
         el.textContent = item;
@@ -94,11 +94,13 @@
             const selectedEl = toggleSelection(el, selectTracker.current);
             selectTracker.current = selectedEl;
           }
+          // 💥 This is the key: clear ALL panels beyond this point, every time
+          clearRightPanels(level + 1);
           onClick(el, item, level + 1);
         };
         panel.appendChild(el);
       });
-
+    
       expansionArea.appendChild(panel);
     }
 
@@ -131,58 +133,28 @@
 
             createPanel(subjects, (subjEl, subject, level) => {
               selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
-
-              if (selectedSubjectEl) {
-                selectedChapterEl = null;
-                selectedActionEl = null;
-
-                createPanel(chapters, (chapEl, chapter, level2) => {
-                  // Always clear anything after the chapter level
-                  clearRightPanels(level2);
-                
-                  // Handle deselection of previous chapter
-                  if (selectedChapterEl && selectedChapterEl !== chapEl) {
-                    selectedChapterEl.classList.remove('selected');
-                  }
-                
-                  // If same chapter is clicked again, toggle selection and return
-                  if (selectedChapterEl === chapEl) {
-                    chapEl.classList.toggle('selected');
-                    selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
-                    return;
-                  }
-                
-                  // Select new chapter
-                  chapEl.classList.add('selected');
-                  selectedChapterEl = chapEl;
-                
-                  // Reset any selected action
-                  selectedActionEl = null;
-                
-                  // Only one actions panel should exist now
-                  clearRightPanels(level2 + 1);
-                
-                  createPanel(actions, (actionEl) => {
-                    if (selectedActionEl && selectedActionEl !== actionEl) {
-                      selectedActionEl.classList.remove('selected');
-                    }
-                
-                    if (selectedActionEl === actionEl) {
-                      actionEl.classList.toggle('selected');
-                      selectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
-                      return;
-                    }
-                
-                    actionEl.classList.add('selected');
-                    selectedActionEl = actionEl;
-                
-                  }, level2 + 1, true, { current: selectedActionEl });
-                });
-
-              } else {
+            
+              if (!selectedSubjectEl) {
                 clearRightPanels(level);
+                return;
               }
+            
+              createPanel(chapters, (chapEl, chapter, level2) => {
+                selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
+            
+                if (!selectedChapterEl) {
+                  clearRightPanels(level2);
+                  return;
+                }
+            
+                createPanel(actions, (actionEl) => {
+                  selectedActionEl = toggleSelection(actionEl, selectedActionEl);
+                }, level2 + 1, true, { current: selectedActionEl });
+            
+              }, level + 1, true, { current: selectedChapterEl });
+            
             }, 0, true, { current: selectedSubjectEl });
+
           } else {
             clearRightPanels(0);
           }
