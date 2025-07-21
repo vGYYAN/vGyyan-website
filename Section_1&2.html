@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🧠 vGYYAN.ai</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -103,7 +106,7 @@
       85% { top: -100%; }
       100% { top: 100%; }
     }
-
+    
     /* Section 2: Posters */
     .section-2 {
       margin-top: -3rem; /* pulls section 2 upward slightly into view */
@@ -184,13 +187,104 @@
       0% { transform: translateX(-50%); }
       100% { transform: translateX(0); }
     }
+    /* Section 3 */
+    .section-3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      min-height: 80vh;
+      background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%);
+    }
+    
+    .section-3-left {
+      max-width: 1150px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    
+    .section-3 .headline {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #111;
+    }
+    
+    .section-3 .headline span {
+      display: block;
+      font-size: 3.5rem;
+      color: #0077cc;
+    }
+    
+    .scroll-text p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: #777;
+      font-weight: 400;
+      margin: 0.25rem 0;
+      transition: all 0.5s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .scroll-text p.active {
+      color: #000;
+      font-weight: 600;
+    }
+    
+    .why-heading {
+      font-size: 2.5rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 4rem 0 2rem;
+      color: #222;
+    }
+    
+    .advantage-row {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+    
+    .advantage-box {
+      flex: 1 1 280px;
+      max-width: 280px;
+      height: 250px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .advantage-box:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .advantage-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #0077cc;
+    }
+    
+    .advantage-box p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.5;
+    }
+
   </style>
 </head>
 <body>
   <!-- Navbar -->
   <div class="navbar">
     <div class="nav-left">
-      <a class="nav-link" href="#what">What We Do</a>
+      <a class="nav-link" href="#whatwedo">What We Do</a>
       <a class="nav-link" href="#about">About Us</a>
       <a class="nav-link" href="#app">Get the App</a>
     </div>
@@ -261,7 +355,6 @@
         -->
       </div>
     </div>
-
     <!-- Row 2 -->
     <div class="poster-row">
       <div class="poster-track">
@@ -304,5 +397,72 @@
       </div>
     </div>
   </div>
+  
+  <!-- Section 3 -->
+    <div class="section-3" id="whatwedo">
+      <div class="section-3-left">
+        <h2 class="headline">
+          From boring text to<br>
+          <span>engaging video</span>
+        </h2>
+        <div class="scroll-text">
+          <p>vGYYAN replaces dull textbooks with immersive, high-impact visuals that accelerate learning.</p>
+          <p>We don’t just stick to the chapter — we go beyond, enriching every topic with deeper insights.</p>
+          <p>Stop wasting hours on random content that drains focus. Learn smarter, stay sharper.</p>
+          <p>Stay ahead with vGYYAN — where curiosity meets innovation and future-ready thinking.</p>
+        </div>
+        <h2 class="why-heading">Why vGYYAN</h2>
+    
+        <div class="advantage-row">
+          <div class="advantage-box">
+            <h3>🎯 Beyond the Chapter</h3>
+            <p>We don’t limit you to what's in the book. We expand your horizons with deeper insights.</p>
+          </div>
+          <div class="advantage-box">
+            <h3>🧠 Adaptive Learning</h3>
+            <p>Our smart personalised Ai enabled modules adopts dynamically, ensuring each students follows path as per their timeline, capability to stay ahead.</p>
+          </div>
+          <div class="advantage-box">
+            <h3>📊 Real-Time Tracking</h3>
+            <p>Know where you stand. Track progress and performance with built-in assessments.</p>
+          </div>
+        </div>
+    
+        <div class="advantage-row">
+          <div class="advantage-box">
+            <h3>🚀 Always Ahead</h3>
+            <p>Stay competitive by learning with AI-powered guidance and early exposure to innovations.</p>
+          </div>
+          <div class="advantage-box">
+            <h3>🔍 Curriculum + Beyond</h3>
+            <p>Every topic is expanded with visuals, stories, and depth — way more than typical classes.</p>
+          </div>
+          <div class="advantage-box">
+            <h3>📱 On Your Time</h3>
+            <p>Study anywhere, anytime. Your progress is synced and personalized across devices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Scroll animation -->
+  <script>
+    const paragraphs = document.querySelectorAll('.scroll-text p');
+  
+    window.addEventListener('scroll', () => {
+      let activated = false;
+  
+      paragraphs.forEach((p) => {
+        const rect = p.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+  
+        if (!activated && midpoint >= window.innerHeight / 2 - 20 && midpoint <= window.innerHeight / 2 + 20) {
+          p.classList.add('active');
+          activated = true;
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
