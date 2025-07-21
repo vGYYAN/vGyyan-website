@@ -137,20 +137,46 @@
                 selectedActionEl = null;
 
                 createPanel(chapters, (chapEl, chapter, level2) => {
-                  selectedChapterEl = toggleSelection(chapEl, selectedChapterEl);
-
-                  clearRightPanels(level2 + 1);
-                  
-                  if (selectedChapterEl) {
-                    selectedActionEl = null;
-
-                    createPanel(actions, (actionEl) => {
-                      selectedActionEl = toggleSelection(actionEl, selectedActionEl);
-                    }, level2 + 1, true, { current: selectedActionEl });
-                  } else {
-                    clearRightPanels(level2 + 1);
+                  // Always clear deeper panels before any action
+                  clearRightPanels(level2);
+                
+                  // Remove selected style from old chapter if exists
+                  if (selectedChapterEl && selectedChapterEl !== chapEl) {
+                    selectedChapterEl.classList.remove('selected');
                   }
-                }, level, true, { current: selectedChapterEl });
+                
+                  // If same chapter clicked again, toggle
+                  if (selectedChapterEl === chapEl) {
+                    chapEl.classList.toggle('selected');
+                    selectedChapterEl = chapEl.classList.contains('selected') ? chapEl : null;
+                    return; // stop here
+                  }
+                
+                  // Else select new chapter
+                  chapEl.classList.add('selected');
+                  selectedChapterEl = chapEl;
+                
+                  // Reset action selection
+                  selectedActionEl = null;
+                
+                  // Now open actions panel for the selected chapter
+                  createPanel(actions, (actionEl) => {
+                    if (selectedActionEl && selectedActionEl !== actionEl) {
+                      selectedActionEl.classList.remove('selected');
+                    }
+                
+                    if (selectedActionEl === actionEl) {
+                      actionEl.classList.toggle('selected');
+                      selectedActionEl = actionEl.classList.contains('selected') ? actionEl : null;
+                      return;
+                    }
+                
+                    actionEl.classList.add('selected');
+                    selectedActionEl = actionEl;
+                
+                  }, level2 + 1, true, { current: selectedActionEl });
+                });
+
               } else {
                 clearRightPanels(level);
               }
