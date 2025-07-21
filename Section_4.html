@@ -18,7 +18,7 @@
     <!-- Left Column -->
     <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
       <!-- vGYYAN Module -->
-      <div id="vgyaan-module" class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected cursor-pointer">
+      <div id="vgyaan-box" class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected cursor-pointer">
         <h2 class="text-lg font-bold text-green-600">vGYYAN</h2>
         <div class="mt-2 text-sm text-gray-600">Video placeholder here to explain features.</div>
       </div>
@@ -46,7 +46,7 @@
     const classList = document.getElementById('class-list');
     const template = document.getElementById('class-template');
     const expansionArea = document.getElementById('expansion-area');
-    const vgyaanModule = document.getElementById('vgyaan-module');
+    const vgyaanBox = document.getElementById('vgyaan-box');
 
     let selectedClassEl = null;
     let selectedSubjectEl = null;
@@ -106,11 +106,14 @@
       [selectedClassEl, selectedSubjectEl, selectedChapterEl, selectedActionEl].forEach(el => {
         if (el) el.classList.remove('selected');
       });
-      selectedClassEl = null;
-      selectedSubjectEl = null;
-      selectedChapterEl = null;
-      selectedActionEl = null;
+      selectedClassEl = selectedSubjectEl = selectedChapterEl = selectedActionEl = null;
     }
+
+    vgyaanBox.onclick = () => {
+      resetAllSelections();
+      clearRightPanels(0);
+      console.log("vGYYAN selected. Video should play here.");
+    };
 
     function buildClassModules() {
       classes.forEach(cls => {
@@ -120,11 +123,12 @@
         num.textContent = cls;
 
         box.onclick = () => {
-          const isSame = selectedClassEl === box;
-          resetAllSelections();
-          clearRightPanels(0);
-          if (!isSame) {
-            selectedClassEl = toggleSelection(box, null);
+          selectedClassEl = toggleSelection(box, selectedClassEl);
+          if (selectedClassEl) {
+            selectedSubjectEl = null;
+            selectedChapterEl = null;
+            selectedActionEl = null;
+
             createPanel(subjects, (subjEl, subject, level) => {
               selectedSubjectEl = toggleSelection(subjEl, selectedSubjectEl);
 
@@ -137,7 +141,6 @@
 
                   if (selectedChapterEl) {
                     selectedActionEl = null;
-
                     createPanel(actions, (actionEl) => {
                       selectedActionEl = toggleSelection(actionEl, selectedActionEl);
                     }, level2 + 1, true, { current: selectedActionEl });
@@ -149,20 +152,14 @@
                 clearRightPanels(level);
               }
             }, 0, true, { current: selectedSubjectEl });
+          } else {
+            clearRightPanels(0);
           }
         };
 
         classList.appendChild(clone);
       });
     }
-
-    vgyaanModule.onclick = () => {
-      resetAllSelections();
-      clearRightPanels(0);
-      vgyaanModule.classList.add('selected');
-      // Placeholder: replace with real video action later
-      console.log('Playing vGYYAN overview video...');
-    };
 
     buildClassModules();
   </script>
