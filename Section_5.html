@@ -2,157 +2,185 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>vGYYAN Class Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Section 5 – Teachers & Impact</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .selected {
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffde7;
+    }
+
+    /* Scrolling Teachers */
+    .teacher-row {
+      overflow: hidden;
+      white-space: nowrap;
+      margin-bottom: 4rem;
+      padding: 2rem 1rem;
+    }
+
+    .teacher-track {
+      display: inline-flex;
+      animation: scroll-left 35s linear infinite;
+    }
+
+    .teacher-row:hover .teacher-track {
+      animation-play-state: paused;
+    }
+
+    .teacher {
+      background: #ffffff;
+      flex: 0 0 auto;
+      width: 180px;
+      height: 220px;
+      margin-right: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .teacher:hover {
       transform: scale(1.05);
-      border: 2px solid #22c55e;
-      background-color: #f0fdf4;
+    }
+
+    .teacher img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .teacher h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .teacher p {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Comparison Section */
+    .impact-comparison {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding: 2rem;
+    }
+
+    .impact-box {
+      flex: 1 1 300px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      min-width: 280px;
+      max-width: 400px;
+    }
+
+    .impact-box h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #d97706;
+    }
+
+    .impact-box p {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Section Heading */
+    .section-heading {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 2rem 0 1rem;
+      color: #111;
     }
   </style>
 </head>
-<body class="min-h-screen overflow-x-auto" style="background: rgba(255, 255, 200, 0.95); backdrop-filter: saturate(180%) brightness(105%);">
-  <div class="flex">
-    <!-- Left Column -->
-    <div class="w-80 flex flex-col pl-10 pr-6 py-4 space-y-4">
-      <!-- vGYYAN Module -->
-      <div id="vgyaan-box" class="bg-white rounded-xl p-4 shadow-md ring-2 ring-green-300 selected cursor-pointer">
-        <h2 class="text-lg font-bold text-green-600">vGYYAN</h2>
-        <div class="mt-2 text-sm text-gray-600">Video placeholder here to explain features.</div>
+<body>
+
+  <h2 class="section-heading">👩‍🏫 Meet Our Expert Teachers</h2>
+
+  <!-- Teacher Loop Row -->
+  <div class="teacher-row">
+    <div class="teacher-track">
+      <!-- Repeat Teachers -->
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 1">
+        <h4>Mrs. Sharma</h4>
+        <p>English | Class 4–6</p>
       </div>
-
-      <!-- Class Modules -->
-      <template id="class-template">
-        <div class="bg-white rounded-xl p-4 shadow-md cursor-pointer transition-transform duration-200">
-          <h3 class="font-semibold">Class <span class="class-num"></span></h3>
-        </div>
-      </template>
-
-      <div id="class-list" class="space-y-4"></div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 2">
+        <h4>Mr. Rakesh</h4>
+        <p>Science | Class 7–9</p>
+      </div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 3">
+        <h4>Ms. Anjali</h4>
+        <p>EVS | Class 3–5</p>
+      </div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 4">
+        <h4>Dr. Mehta</h4>
+        <p>SST | Class 8–10</p>
+      </div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 5">
+        <h4>Mr. Rajiv</h4>
+        <p>Math | Class 6–9</p>
+      </div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 6">
+        <h4>Ms. Neha</h4>
+        <p>Hindi | Class 3–7</p>
+      </div>
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 7">
+        <h4>Mrs. Iyer</h4>
+        <p>English | Class 8–10</p>
+      </div>
+      <!-- Duplicate for smooth loop -->
+      <div class="teacher">
+        <img src="https://via.placeholder.com/150" alt="Teacher 8">
+        <h4>Mr. Khan</h4>
+        <p>Geography | Class 6–10</p>
+      </div>
     </div>
-
-    <!-- Right Expansion Panels -->
-    <div id="expansion-area" class="flex flex-grow p-4 space-x-6 overflow-x-auto items-start"></div>
   </div>
 
-  <script>
-    const classes = Array.from({ length: 10 }, (_, i) => i + 1);
-    const subjects = ['English', 'Science', 'SST'];
-    const chapters = Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`);
-    const actions = ['Video', 'Summary', 'Questions'];
-  
-    const classList = document.getElementById('class-list');
-    const template = document.getElementById('class-template');
-    const expansionArea = document.getElementById('expansion-area');
-    const vgyaanBox = document.getElementById('vgyaan-box');
-  
-    let selectedElements = {
-      class: null,
-      subject: null,
-      chapter: null,
-      action: null
-    };
-  
-    function clearPanels(fromIndex = 0) {
-      while (expansionArea.children.length > fromIndex) {
-        expansionArea.removeChild(expansionArea.lastChild);
-      }
-    }
-  
-    function toggleSelection(el, key) {
-      const prev = selectedElements[key];
-      if (prev && prev !== el) prev.classList.remove('selected');
-  
-      if (prev === el) {
-        el.classList.toggle('selected');
-        selectedElements[key] = el.classList.contains('selected') ? el : null;
-      } else {
-        el.classList.add('selected');
-        selectedElements[key] = el;
-      }
-  
-      return selectedElements[key];
-    }
-  
-    function createPanel(items, onClick, level, trackerKey) {
-      clearPanels(level);
-      const panel = document.createElement('div');
-      panel.className = 'bg-white rounded-xl p-4 shadow-md space-y-2 transition-all duration-200 w-fit h-fit';
-      panel.style.minWidth = '300px';
-      panel.style.maxWidth = '340px';
-      panel.style.display = 'inline-block';
-      panel.style.alignSelf = 'flex-start';
-  
-      items.forEach(item => {
-        const el = document.createElement('div');
-        el.textContent = item;
-        el.className = 'cursor-pointer hover:text-green-600 px-2 py-1 rounded-md transition-transform';
-        el.onclick = () => {
-          if (!toggleSelection(el, trackerKey)) {
-            clearPanels(level + 1);
-            return;
-          }
-          onClick(item, level + 1);
-        };
-        panel.appendChild(el);
-      });
-  
-      expansionArea.appendChild(panel);
-    }
-  
-    function resetAll() {
-      Object.keys(selectedElements).forEach(k => {
-        if (selectedElements[k]) selectedElements[k].classList.remove('selected');
-        selectedElements[k] = null;
-      });
-    }
-  
-    vgyaanBox.onclick = () => {
-      resetAll();
-      clearPanels(0);
-    };
-  
-    function buildClassModules() {
-      classes.forEach(cls => {
-        const clone = template.content.cloneNode(true);
-        const box = clone.querySelector('div');
-        const num = clone.querySelector('.class-num');
-        num.textContent = cls;
-  
-        box.onclick = () => {
-          if (!toggleSelection(box, 'class')) {
-            clearPanels(0);
-            return;
-          }
-  
-          selectedElements.subject = null;
-          selectedElements.chapter = null;
-          selectedElements.action = null;
-  
-          createPanel(subjects, (subject, subjectLevel) => {
-            createPanel(chapters, (chapter, chapterLevel) => {
-              createPanel(actions, (action, actionLevel) => {
-                clearPanels(actionLevel);
-                const content = document.createElement('div');
-                content.className = 'min-w-[400px] bg-white p-4 rounded-xl shadow';
-                content.innerHTML = `
-                  <h3 class="text-lg font-bold mb-2">${chapter} - ${action}</h3>
-                  <p class="text-sm text-gray-500">[${action} content placeholder]</p>
-                `;
-                expansionArea.appendChild(content);
-              }, chapterLevel, 'action');
-            }, subjectLevel, 'chapter');
-          }, 0, 'subject');
-        };
-  
-        classList.appendChild(clone);
-      });
-    }
-  
-    buildClassModules();
-  </script>
+  <!-- Comparison Block -->
+  <h2 class="section-heading">📊 Impact of vGYYAN</h2>
+
+  <div class="impact-comparison">
+    <div class="impact-box before-impact">
+      <h3>Before vGYYAN</h3>
+      <p>✅ Only 30% students actively participated</p>
+      <p>📉 Retention was around 45%</p>
+      <p>🧩 Lack of conceptual clarity</p>
+    </div>
+    <div class="impact-box after-impact">
+      <h3>After vGYYAN</h3>
+      <p>✅ 80% students consistently engaged</p>
+      <p>📈 Retention jumped to 85%</p>
+      <p>💡 Clear understanding & interactive learning</p>
+    </div>
+  </div>
 
 </body>
 </html>
