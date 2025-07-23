@@ -748,5 +748,25 @@
     window.addEventListener('resize', updateCarousel);
     updateCarousel(); // initial load
   </script>
+  <script>
+    const paragraphs = document.querySelectorAll('.scroll-text p');
+  
+    window.addEventListener('scroll', () => {
+      let activated = false;
+  
+      paragraphs.forEach((p) => {
+        const rect = p.getBoundingClientRect();
+        const midpoint = rect.top + rect.height / 2;
+  
+        // Check if this paragraph is near the center of the screen
+        if (!activated && midpoint >= window.innerHeight / 2 - 20 && midpoint <= window.innerHeight / 2 + 20) {
+          p.classList.add('active');
+          activated = true;
+        } else {
+          p.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
