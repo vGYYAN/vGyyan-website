@@ -377,7 +377,21 @@
       font-weight: bold;
       margin: 0.5rem 0 1rem;
       color: #111;
-    }    
+    }
+
+    /* Section - 6 */
+    .review-card {
+      transition: all 0.4s ease;
+    }
+    .review-card.inactive {
+      opacity: 0.4;
+      transform: scale(0.95);
+    }
+    .review-card.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
@@ -544,6 +558,8 @@
         </div>
       </div>
     </div>
+  <!-- Section 4 is of class video/summary/question part integrated with Hero section -->
+  <!-- Section 5 -->
   <h2 class="section-heading">👩‍🏫 Meet Our Expert Teachers</h2>
 
     <!-- Teacher Loop Row -->
@@ -652,7 +668,85 @@
         <p>💡 Clear understanding & interactive learning</p>
       </div>
     </div>
+  <div class="flex items-start justify-center min-h-screen px-4 py-12 gap-8">
 
+    <div class="w-1/4 flex flex-col justify-center items-start h-full">
+      <div class="mb-4">
+        <h2 class="text-4xl font-bold text-black leading-tight">Loved by Students.</h2>
+        <div class="mt-2 text-4xl font-bold text-indigo-600 leading-tight">
+          <span class="block">Tracked by</span>
+          <span class="block">Parents.</span>
+        </div>
+      </div>
+    
+      <!-- Arrows aligned to match fixed height review card -->
+      <div class="flex items-center gap-4" style="margin-top: 10rem;">
+        <button id="prev" class="bg-white shadow-md w-12 h-12 rounded-full flex items-center justify-center text-xl hover:bg-gray-100">&#8592;</button>
+        <button id="next" class="bg-white shadow-md w-12 h-12 rounded-full flex items-center justify-center text-xl hover:bg-gray-100">&#8594;</button>
+      </div>
+    </div>
+
+    <!-- Reviews Carousel -->
+    <div class="w-3/4 flex overflow-hidden relative">
+      <div id="carousel" class="flex transition-transform duration-500 ease-in-out space-x-6">
+        <!-- Review 1 -->
+        <div class="review-card active bg-white rounded-xl shadow-lg p-6 min-w-[440px] max-w-[320px] h-[500px]">
+          <p class="text-lg font-medium mb-4 overflow-auto max-h-[500px]">"vGYYAN made science fun. I never thought I’d understand chemistry so well!
+            I can track what chapters my son watched. Finally some control over screen time!
+            I can track what chapters my son watched. Finally some control over screen time!
+            I can track what chapters my son watched. Finally some control over screen time!
+            I can track what chapters my son watched. Finally some control over screen time!
+            I can track what chapters my son watched. Finally some control over screen time!"</p>
+          <div class="mt-auto text-sm text-gray-600">— Riya, Class 9</div>
+        </div>  
+        <!-- Review 2 -->
+        <div class="review-card inactive bg-white rounded-xl shadow-lg p-6 min-w-[440px] max-w-[320px]">
+          <p class="text-lg font-medium mb-4 overflow-auto max-h-[220px]">"I can track what chapters my son watched. Finally some control over screen time!"</p>
+          <div class="mt-auto text-sm text-gray-600">— Mr. Sinha, Parent of Class 6 student</div>
+        </div>
+        <!-- Review 3 -->
+        <div class="review-card inactive bg-white rounded-xl shadow-lg p-6 min-w-[440px] max-w-[320px]">
+          <p class="text-lg font-medium mb-4 overflow-auto max-h-[220px]">"It feels like watching a movie, but I’m actually learning chapters!"</p>
+          <div class="mt-auto text-sm text-gray-600">— Akash, Class 7</div>
+        </div>
+        <!-- Add more as needed -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const carousel = document.getElementById('carousel');
+    const reviews = document.querySelectorAll('.review-card');
+    const next = document.getElementById('next');
+    const prev = document.getElementById('prev');
+
+    let activeIndex = 0;
+
+    function updateCarousel() {
+      reviews.forEach((card, idx) => {
+        card.classList.remove('active', 'inactive');
+        if (idx === activeIndex) {
+          card.classList.add('active');
+        } else {
+          card.classList.add('inactive');
+        }
+      });
+      const offset = -activeIndex * (reviews[0].offsetWidth + 24);
+      carousel.style.transform = `translateX(${offset}px)`;
+    }
+
+    next.addEventListener('click', () => {
+      activeIndex = (activeIndex + 1) % reviews.length;
+      updateCarousel();
+    });
+
+    prev.addEventListener('click', () => {
+      activeIndex = (activeIndex - 1 + reviews.length) % reviews.length;
+      updateCarousel();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+    updateCarousel(); // initial load
   </script>
 </body>
 </html>
