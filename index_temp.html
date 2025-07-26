@@ -19,22 +19,10 @@
       overflow-x: hidden;
     }
 
-    <div class="bg-yellow-100 text-yellow-900 text-sm px-4 py-2 text-center font-medium">
-      🚧 This website is currently under development. Visuals and content may change before the final launch.<br>
-      💡 You're viewing a concept preview. 📩 <span class="underline cursor-pointer">Leave your email</span> to get early access and updates!
-    </div>
-    <div class="bg-yellow-100 text-yellow-900 text-sm px-4 py-2 text-center font-medium">
-      🚧 This website is currently under development. Visuals and content may change before the final launch.<br>
-      💡 You're viewing a concept preview.
-      📩 <a href="https://forms.gle/JwLYGJBwPn4hAfFr5" target="_blank" class="underline text-blue-800 font-semibold hover:text-blue-600">
-        Click here to get notified for early access
-      </a>
-    </div>
-
     /* Navbar */
     .navbar {
       position: fixed;
-      top: 5.2rem;
+      top: 1.2rem;
       left: 50%;
       transform: translateX(-50%);
       width: 95%;
@@ -55,30 +43,20 @@
       gap: 1.5rem;
     }
 
-    <div id="logo-middle" class="nav-middle cursor-pointer">
-      🧠 vGYYAN.ai
-    </div>
+    .nav-middle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      font-size: 2rem;
+      color: #222;
+    }
 
     .nav-link {
       text-decoration: none;
       color: #333;
       font-weight: 500;
     }
-
-    <section id="notify" class="bg‑yellow‑100 text‑center py‑8">
-      <h2 class="text‑2xl font‑extrabold mb‑2">
-        Website under development • Visuals & content change at launch
-      </h2>
-      <p class="mb‑4 text‑lg">
-        Sign up now to get early access once we go live.
-      </p>
-      <a
-        href="https://your‑google‑form.link"
-        class="inline‑block bg‑blue‑600 text‑white px‑6 py‑3 rounded‑md hover:bg‑blue‑700"
-        target="_blank" rel="noopener">
-        Notify me (I'm a student or parent)
-      </a>
-    </section>
 
     /* Hero Section */
     header {
@@ -428,7 +406,9 @@
       <a class="nav-link" href="class.html" target="_blank" rel="noopener noreferrer">Class</a>
       <a class="nav-link" href="#app">Get the App</a>
     </div>
-   
+    <div class="nav-middle">
+      🧠 vGYYAN.ai
+    </div>
     <div class="nav-right">
       <a class="nav-link" href="#signup">Sign Up</a>
       <a class="nav-link" href="#login">Login</a>
@@ -859,11 +839,5 @@
       </div>
     </div>
   </div>
-    <script>
-    document.getElementById('logo-middle')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
 </body>
 </html>
