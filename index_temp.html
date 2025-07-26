@@ -18,6 +18,10 @@
         #ffffff;
       overflow-x: hidden;
     }
+    document.getElementById('logo‑middle').addEventListener('click', e => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
     <div class="bg-yellow-100 text-yellow-900 text-sm px-4 py-2 text-center font-medium">
       🚧 This website is currently under development. Visuals and content may change before the final launch.<br>
@@ -69,6 +73,21 @@
       color: #333;
       font-weight: 500;
     }
+
+    <section id="notify" class="bg‑yellow‑100 text‑center py‑8">
+      <h2 class="text‑2xl font‑extrabold mb‑2">
+        Website under development • Visuals & content change at launch
+      </h2>
+      <p class="mb‑4 text‑lg">
+        Sign up now to get early access once we go live.
+      </p>
+      <a
+        href="https://your‑google‑form.link"
+        class="inline‑block bg‑blue‑600 text‑white px‑6 py‑3 rounded‑md hover:bg‑blue‑700"
+        target="_blank" rel="noopener">
+        Notify me (I'm a student or parent)
+      </a>
+    </section>
 
     /* Hero Section */
     header {
@@ -417,9 +436,9 @@
       <a class="nav-link" href="#whatwedo">What We Do</a>
       <a class="nav-link" href="class.html" target="_blank" rel="noopener noreferrer">Class</a>
       <a class="nav-link" href="#app">Get the App</a>
-      <a href="#" class="nav-middle scroll-top">
-        🧠 vGYYAN.ai
-      </a>
+    </div>
+    <div id="logo-middle" class="nav-middle cursor-pointer">
+      🧠 vGYYAN.ai
     </div>
     <div class="nav-right">
       <a class="nav-link" href="#signup">Sign Up</a>
