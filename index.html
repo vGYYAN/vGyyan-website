@@ -378,7 +378,6 @@
       margin: 0.5rem 0 1rem;
       color: #111;
     }
-
     /* Section - 6 */
     .review-card {
       transition: all 0.4s ease;
@@ -391,6 +390,11 @@
       opacity: 1;
       transform: scale(1);
       z-index: 10;
+    }
+    /* Section 7 */
+    .vgyaan-label {
+    font-size: 1.8rem; /* default = 16px */
+    margin-top: 1.25rem; /* equivalent to mt-5 */
     }
   </style>
 </head>
@@ -768,5 +772,72 @@
       });
     });
   </script>
+  <div style="background-color: rgba(80, 80, 80, 0.95);" class="text-white font-sans">
+    <div class="grid grid-cols-3 gap-2 px-[4%] py-10 items-start justify-items-center">
+
+    <!-- Left Column -->
+    <div class="space-y-1 text-left">
+      <p class="hover:underline cursor-pointer">Home</p>
+      <p class="hover:underline cursor-pointer">About Us</p>
+      <p class="hover:underline cursor-pointer">Contact Us</p>
+      <p class="hover:underline cursor-pointer">Join Us</p>
+    </div>
+
+    <!-- Center Column (Social Media Icons) -->
+    <div class="flex flex-col items-center space-y-2">
+      <p class="hover:underline cursor-pointer">YouTube</p>
+      <p class="hover:underline cursor-pointer">Instagram</p>
+      <p class="hover:underline cursor-pointer">Mail</p>
+      <p class="hover:underline cursor-pointer">Twitter</p>
+      <p class="hover:underline cursor-pointer">LinkedIn</p>
+      <p class="hover:underline cursor-pointer">Facebook</p>
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-1 text-right">
+      <p>Contact: +91-XXXXXXXXXX</p>
+      <p>Email: contact@vgyyan.in</p>
+    </div>
+  </div>
+
+  <!-- Bottom Footer with Logo and Tagline -->
+  <!-- Bottom Footer with Logo and Tagline -->
+  <div class="px-10 pb-6">
+    <div class="flex items-start gap-4">
+      <div class="text-4xl font-bold">V</div>
+      <div class="text-sm pt-2">Experience the best learning with vGYYAN – Future of Education</div>
+    </div>
+  
+    <!-- Large vGYYAN with full form aligned below -->
+    <div class="text-white mt-12 text-center">
+      <div class="flex justify-between px-10 gap-x-10">
+        <!-- One block per letter -->
+        <div class="flex flex-col items-center mt-24">
+          <span class="text-[100px] font-extrabold leading-none">V</span>
+          <span class="vgyaan-label">Virtual</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[200px] font-extrabold leading-none">G</span>
+          <span class="vgyaan-label">Growth</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[200px] font-extrabold leading-none">Y</span>
+          <span class="vgyaan-label">Young</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[200px] font-extrabold leading-none">Y</span>
+          <span class="vgyaan-label">Yearners</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[200px] font-extrabold leading-none">A</span>
+          <span class="vgyaan-label">Aspiring</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[200px] font-extrabold leading-none">N</span>
+          <span class="vgyaan-label">Nation</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
