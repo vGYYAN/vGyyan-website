@@ -153,6 +153,22 @@
   
     buildClassModules();
   </script>
+    <!-- Notification Modal -->
+    <div id="earlyAccessModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-white text-black rounded-xl p-6 max-w-md text-center shadow-lg relative">
+        <h2 class="text-xl font-bold mb-2">🚧 Under Development</h2>
+        <p class="mb-4 text-sm">
+          This website is currently under development. Visuals and content may change.<br>
+          Get notified when we launch officially.
+        </p>
+        <a href="https://forms.gle/ZjG3axK96UckNuj39" target="_blank" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+          📩 Get Early Access
+        </a>
+        <button onclick="document.getElementById('earlyAccessModal').style.display='none'"
+          class="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500">
+          &times;
+        </button>
+      </div>
 
 </body>
 </html>
