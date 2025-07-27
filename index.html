@@ -74,38 +74,39 @@
     }
 
     .hero-main {
-      font-size: 2rem;
-      font-weight: bold;
+      font-size: 2.5rem;
+      font-weight: 700;
       color: #000;
-      margin-bottom: 1rem;
+    }
+    .hero-main-sub {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #000;
+      margin-bottom: 3rem;
     }
 
     .hero-sub {
       font-size: 2.5rem;
       font-weight: 600;
       color: #0077cc;
+    }
+    
+    .hero-mid {
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: #0077cc;
+    }
+    
+    .hero-bottom {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #0077cc;
       margin-bottom: 2rem;
     }
-
-    .floating-text {
-      font-size: 1.2rem;
-      color: #111;
-      line-height: 1.6;
-      height: 6rem;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .floating-text span {
-      position: absolute;
-      width: 100%;
-      animation: floatText 10s linear infinite;
-    }
-
-    @keyframes floatText {
-      0% { top: 100%; }
-      85% { top: -100%; }
-      100% { top: 100%; }
+        
+    .hero-stats {
+      font-size: 2rem;
+      color: #000;
     }
     
     /* Section 2: Posters */
@@ -193,7 +194,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 4rem 2rem;
+      padding: 2rem 2rem;
       min-height: 80vh;
       background: linear-gradient(135deg, #f1fdf6 0%, #fdfdfd 100%);
     }
@@ -201,19 +202,22 @@
     .section-3-left {
       max-width: 1150px;
       text-align: center;
-      margin: 0 auto;
+      margin: 1.5rem;
     }
     
     .section-3 .headline {
       font-size: 3.5rem;
       font-weight: bold;
       color: #111;
+      line-height: 1.1;
+      margin-bottom : 1.5rem
     }
     
     .section-3 .headline span {
       display: block;
       font-size: 3.5rem;
       color: #0077cc;
+      margin-bottom : 3rem
     }
     
     .scroll-text p {
@@ -237,8 +241,9 @@
       font-size: 2.5rem;
       text-align: center;
       font-weight: 700;
-      margin: 4rem 0 2rem;
+      margin: 3rem 0 2rem;
       color: #222;
+      margin-bottom: 2.5rem;
     }
     
     .advantage-row {
@@ -247,19 +252,20 @@
       align-items: stretch;
       gap: 1.5rem;
       flex-wrap: wrap;
-      margin: 2rem 0;
+      margin: 3  rem 0;
     }
     
     .advantage-box {
       flex: 1 1 280px;
-      max-width: 280px;
-      height: 250px;
+      max-width: 310px;
+      height: 270px;
       background: #ffffff;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
       padding: 2rem;
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 2rem;
     }
     
     .advantage-box:hover {
@@ -343,19 +349,22 @@
     .impact-comparison {
       display: flex;
       justify-content: center;
-      gap: 5rem;
+      gap: 8rem;
       flex-wrap: wrap;
-      padding: 2rem;
+      padding: 2.5rem;
     }
 
     .impact-box {
       flex: 1 1 300px;
       background: #ffffff;
       border-radius: 12px;
-      padding: 2rem;
+      padding: 4rem;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease;
+      overflow: hidden;
       min-width: 280px;
-      max-width: 400px;
+      max-width: 500px;
+      height: 400px;
     }
 
     .impact-box h3 {
@@ -375,12 +384,15 @@
       text-align: center;
       font-size: 2.5rem;
       font-weight: bold;
-      margin: 0.5rem 0 1rem;
+      /*margin: 0.5rem 0 1rem;*/
       color: #111;
+      margin-left: 3rem;
     }
     /* Section - 6 */
     .review-card {
       transition: all 0.4s ease;
+      border: 1px solid #ccc; /* light gray border for clarity */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
     .review-card.inactive {
       opacity: 0.4;
@@ -405,9 +417,9 @@
       <a class="nav-link" href="#whatwedo">What We Do</a>
       <a class="nav-link" href="class.html" target="_blank" rel="noopener noreferrer">Class</a>
       <a class="nav-link" href="#app">Get the App</a>
-    </div>
-    <div class="nav-middle">
-      🧠 vGYYAN.ai
+      <a href="#" class="nav-middle scroll-top">
+        🧠 vGYYAN.ai
+      </a>
     </div>
     <div class="nav-right">
       <a class="nav-link" href="#signup">Sign Up</a>
@@ -418,18 +430,19 @@
 
   <!-- Section 1 -->
   <header>
-    <div class="hero-left">
-      <div class="hero-main">Skip outdated learning methods.</div>
-      <div class="hero-sub">Step into the future of education with vGyyan.ai</div>
-      <div class="floating-text">
-        <span>
-          Personalized learning with built-in quizzes.<br />
-          Track your child’s growth and academic progress.<br />
-          Monthly competitions, AI-generated insights, and more.<br />
-          Personalized learning with built-in quizzes.<br />
-          Track your child’s growth and academic progress.<br />
-          Monthly competitions, AI-generated insights, and more.<br />
-        </span>
+    <div class="hero-left mt-[1rem]">
+      <div class="hero-main">Backed by curriculum</div>
+      <div class="hero-main-sub">Enhanced by innovation</div>
+      <div class="text-left">
+        <div class="hero-sub">Rewriting textbooks</div>
+        <div class="hero-mid">into visual journeys</div>
+        <div class="hero-bottom">with vGYYAN.ai</div>
+      </div>
+      <!--<div class="hero-stats text-xl font-medium mt-[2rem] leading-relaxed">
+        Focused on 50+ Board<br>
+        <span class="block mt-[0.5rem]">1.5M + Schools</span>
+        <span class="block mt-[0.5rem]">Within next 4 Years</span>
+      </div>-->
       </div>
     </div>
   </header>
@@ -533,31 +546,31 @@
     
         <div class="advantage-row">
           <div class="advantage-box">
-            <h3>🎯 Beyond the Chapter</h3>
-            <p>We don’t limit you to what's in the book. We expand your horizons with deeper insights.</p>
+            <h3>📱 Rewired Screen Time</h3>
+            <p>Students spend 3–5+ hours daily on screens — vGYYAN turns that time into focused learning, transforming distraction into academic excellence, one swipe at a time.</p>
           </div>
           <div class="advantage-box">
-            <h3>🧠 Adaptive Learning</h3>
-            <p>Our smart personalised Ai enabled modules adopts dynamically, ensuring each students follows path as per their timeline, capability to stay ahead.</p>
+            <h3>🧠 AI-Powered Personalized Path</h3>
+            <p>No two learners are alike. Our AI personalizes learning by analyzing progress, adapting pace and guiding each student based on strengths, gaps, and confidence — for maximum growth.</p>
           </div>
           <div class="advantage-box">
-            <h3>📊 Real-Time Tracking</h3>
-            <p>Know where you stand. Track progress and performance with built-in assessments.</p>
-          </div>
+            <h3>🚀 Beyond Books, Into Brilliance</h3>
+          <p>We don’t replicate textbooks — we reimagine them with cinematic visuals, emotional depth, and age-specific storytelling for deeper interest and connection.</p>
         </div>
-    
+        </div>
         <div class="advantage-row">
           <div class="advantage-box">
-            <h3>🚀 Always Ahead</h3>
-            <p>Stay competitive by learning with AI-powered guidance and early exposure to innovations.</p>
+            <h3>🎓 Learn. Compete. Create.</h3>
+            <p>Weekly competitions, real-life projects, national rankings and expert-led challenges — all designed to unlock every student’s true potential.</p>
           </div>
           <div class="advantage-box">
-            <h3>🔍 Curriculum + Beyond</h3>
-            <p>Every topic is expanded with visuals, stories, and depth — way more than typical classes.</p>
+            <h3>📊 Student Dashboard Insights</h3>
+            <p>Track chapter progress, question attempts, rankings and project milestones — all with AI-powered insights, in one place.</p>
           </div>
+        
           <div class="advantage-box">
-            <h3>📱 On Your Time</h3>
-            <p>Study anywhere, anytime. Your progress is synced and personalized across devices.</p>
+            <h3>👨‍👩‍👧 Parent Control Panel</h3>
+            <p>Monitor your child’s progress, get alerts on weak areas, track screen activity, and receive AI-driven recommendations — ensuring smart learning, not just screen time.</p>
           </div>
         </div>
       </div>
@@ -674,7 +687,7 @@
     </div>
   <div class="flex items-start justify-center min-h-screen px-4 py-12 gap-8">
 
-    <div class="w-1/4 flex flex-col justify-center items-start h-full">
+    <div class="w-1/4 flex flex-col justify-center items-start h-full ml-8">
       <div class="mb-4">
         <h2 class="text-4xl font-bold text-black leading-tight">Loved by Students.</h2>
         <div class="mt-2 text-4xl font-bold text-indigo-600 leading-tight">
@@ -839,5 +852,22 @@
       </div>
     </div>
   </div>
+    <!-- Notification Modal -->
+    <div id="earlyAccessModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-white text-black rounded-xl p-6 max-w-md text-center shadow-lg relative">
+        <h2 class="text-xl font-bold mb-2">🚧 Under Development</h2>
+        <p class="mb-4 text-sm">
+          This website is currently under development. Visuals and content may change.<br>
+          Get notified when we launch officially.
+        </p>
+        <a href="https://forms.gle/ZjG3axK96UckNuj39" target="_blank" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+          📩 Get Early Access
+        </a>
+        <button onclick="document.getElementById('earlyAccessModal').style.display='none'"
+          class="absolute top-2 right-3 text-xl text-gray-500 hover:text-red-500">
+          &times;
+        </button>
+      </div>
+    </div>
 </body>
 </html>
